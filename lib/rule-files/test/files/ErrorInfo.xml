@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+@gt > 
+@lt < 
+@lteq <= 
+@gteq >= 
+@or || 
+@and && 
+@bitwise_and & 
+@bitwise_or | 
+@left_shift << 
+@right_shift >> 
+@right_unsigned_shift >>> 
+@and_assign &= 
+@or_assign |= 
+@left_shift_assign <<= 
+@right_shift_assign >>= 
+@right_unsigned_shift_assign >>>= 
+
+$Powered By vRules4j-Digester Automatically On Thu Mar 17 21:28:54 CST 2016$
+Visit http://sourceforge.net/projects/vrules/ to download the latest version
+
+Author: jordan.xue
+-->
+<vRules4j>
+    <global>
+        <decisionMode>false</decisionMode>
+        <assertion>false</assertion>
+        <returnErrorId>false</returnErrorId>
+        <displayErrorValue>true</displayErrorValue>
+        <toggleBreakpoint>off</toggleBreakpoint>
+        <enableBinding>false</enableBinding>
+        <includes>./sub/ErrorInfo.xml,../ErrorInfo.xml</includes>
+    </global>
+    <imports/>
+    <java/>
+    <contexts>
+        <context className="test.cases.ErrorInfo" name="ErrorInfo"/>
+        <context className="com.unibeta.vrules.base.VRuleSuite" name="VRuleSuite"/>
+        <context className="java.util.LinkedHashMap" name="LinkedHashMap"/>
+    </contexts>
+    <decisionConstants>
+        <definition name="" value=""/>
+    </decisionConstants>
+    <object desc="" id="Binding" name="binding">
+        <className>com.unibeta.vrules.base.Rule$Binding</className>
+        <nillable>false</nillable>
+        <rules>
+            <rule breakpoint="off" depends="" desc="" id="foreach"
+                ifFalse="" ifTrue="" name="foreach" sequence="1">
+                <dataType>class java.lang.String</dataType>
+                <attributes>foreach</attributes>
+                <boolParam>$</boolParam>
+                <assert>foreach !=null </assert>
+                <errorMessage id="foreachErrorMsg" returnId="false">foreach information of Binding is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="src"
+                ifFalse="" ifTrue="" name="src" sequence="2">
+                <dataType>class java.lang.String</dataType>
+                <attributes>src</attributes>
+                <boolParam>$</boolParam>
+                <assert>src !=null </assert>
+                <errorMessage id="srcErrorMsg" returnId="false">src information of Binding is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="var"
+                ifFalse="" ifTrue="" name="var" sequence="3">
+                <dataType>class java.lang.String</dataType>
+                <attributes>var</attributes>
+                <boolParam>$</boolParam>
+                <assert>var !=null </assert>
+                <errorMessage id="varErrorMsg" returnId="false">var information of Binding is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="wirings"
+                ifFalse="" ifTrue="" name="wirings" sequence="4">
+                <dataType>class java.lang.String</dataType>
+                <attributes>wirings</attributes>
+                <boolParam>$</boolParam>
+                <assert>wirings !=null </assert>
+                <errorMessage id="wiringsErrorMsg" returnId="false">wirings information of Binding is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+        </rules>
+    </object>
+    <object desc="" id="DecisionConstantDefinition" name="decisionConstantDefinition">
+        <className>com.unibeta.vrules.base.DecisionConstantDefinition</className>
+        <nillable>false</nillable>
+        <rules>
+            <rule breakpoint="off" depends="" desc="" id="name"
+                ifFalse="" ifTrue="" name="name" sequence="1">
+                <dataType>class java.lang.String</dataType>
+                <attributes>name</attributes>
+                <boolParam>$</boolParam>
+                <assert>name !=null </assert>
+                <errorMessage id="nameErrorMsg" returnId="false">name information of DecisionConstantDefinition is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="value"
+                ifFalse="" ifTrue="" name="value" sequence="2">
+                <dataType>class java.lang.String</dataType>
+                <attributes>value</attributes>
+                <boolParam>$</boolParam>
+                <assert>value !=null </assert>
+                <errorMessage id="valueErrorMsg" returnId="false">value information of DecisionConstantDefinition is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+        </rules>
+    </object>
+    <object desc="" id="ErrorField" name="errorField">
+        <className>test.cases.ErrorField</className>
+        <nillable>false</nillable>
+        <rules>
+            <rule breakpoint="off" depends="" desc="" id="errorId"
+                ifFalse="" ifTrue="" name="errorId" sequence="1">
+                <dataType>class java.lang.String</dataType>
+                <attributes>errorId</attributes>
+                <boolParam>$</boolParam>
+                <assert>errorId !=null </assert>
+                <errorMessage id="errorIdErrorMsg" returnId="false">errorId information of ErrorField is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="xPath"
+                ifFalse="" ifTrue="" name="xPath" sequence="2">
+                <dataType>class java.lang.String</dataType>
+                <attributes>xPath</attributes>
+                <boolParam>$</boolParam>
+                <assert>xPath !=null </assert>
+                <errorMessage id="xPathErrorMsg" returnId="false">xPath information of ErrorField is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+        </rules>
+    </object>
+    <object desc="" id="ErrorInfo" name="errorInfo">
+        <className>test.cases.ErrorInfo</className>
+        <nillable>false</nillable>
+        <rules>
+            <rule breakpoint="off" depends="" desc="" id="error"
+                ifFalse="" ifTrue="" isCollection="false"
+                isComplexType="true" name="error" recursive="true"
+                refId="ErrorField" sequence="1">
+                <binding src="" var="" wirings="ErrorField"/>
+                <dataType>class test.cases.ErrorField</dataType>
+                <attributes>error</attributes>
+                <boolParam>$</boolParam>
+                <assert>error !=null </assert>
+                <errorMessage id="errorErrorMsg" returnId="false">error information of ErrorInfo is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="errorCode"
+                ifFalse="" ifTrue="" name="errorCode" sequence="2">
+                <dataType>class java.lang.String</dataType>
+                <attributes>errorCode</attributes>
+                <boolParam>$</boolParam>
+                <assert>errorCode !=null </assert>
+                <errorMessage id="errorCodeErrorMsg" returnId="false">errorCode information of ErrorInfo is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="errorField"
+                ifFalse="" ifTrue="" isCollection="true"
+                isComplexType="true" name="errorField" recursive="true"
+                refId="ErrorField" sequence="3">
+                <binding foreach="" var="" wirings="ErrorField"/>
+                <dataType>test.cases.ErrorField[]</dataType>
+                <attributes>errorField</attributes>
+                <boolParam>$</boolParam>
+                <assert>errorField !=null </assert>
+                <errorMessage id="errorFieldErrorMsg" returnId="false">errorField information of ErrorInfo is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="errorMsg"
+                ifFalse="" ifTrue="" name="errorMsg" sequence="4">
+                <dataType>class java.lang.String</dataType>
+                <attributes>errorMsg</attributes>
+                <boolParam>$</boolParam>
+                <assert>errorMsg !=null </assert>
+                <errorMessage id="errorMsgErrorMsg" returnId="false">errorMsg information of ErrorInfo is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="xPath"
+                ifFalse="" ifTrue="" name="xPath" sequence="5">
+                <dataType>class java.lang.String</dataType>
+                <attributes>xPath</attributes>
+                <boolParam>$</boolParam>
+                <assert>xPath !=null </assert>
+                <errorMessage id="xPathErrorMsg" returnId="false">xPath information of ErrorInfo is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+        </rules>
+    </object>
+    <object desc="" id="GlobalConfig" name="globalConfig">
+        <className>com.unibeta.vrules.base.GlobalConfig</className>
+        <nillable>false</nillable>
+        <rules>
+            <rule breakpoint="off" depends="" desc="" id="assertion"
+                ifFalse="" ifTrue="" name="assertion" sequence="1">
+                <dataType>boolean</dataType>
+                <attributes>assertion</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="assertionErrorMsg" returnId="false">assertion information of GlobalConfig is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="decisionMode"
+                ifFalse="" ifTrue="" name="decisionMode" sequence="2">
+                <dataType>boolean</dataType>
+                <attributes>decisionMode</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="decisionModeErrorMsg" returnId="false">decisionMode information of GlobalConfig is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="enableBinding"
+                ifFalse="" ifTrue="" name="enableBinding" sequence="3">
+                <dataType>boolean</dataType>
+                <attributes>enableBinding</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="enableBindingErrorMsg" returnId="false">enableBinding information of GlobalConfig is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="includes"
+                ifFalse="" ifTrue="" name="includes" sequence="4">
+                <dataType>class java.lang.String</dataType>
+                <attributes>includes</attributes>
+                <boolParam>$</boolParam>
+                <assert>includes !=null </assert>
+                <errorMessage id="includesErrorMsg" returnId="false">includes information of GlobalConfig is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="returnErrorId"
+                ifFalse="" ifTrue="" name="returnErrorId" sequence="5">
+                <dataType>boolean</dataType>
+                <attributes>returnErrorId</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="returnErrorIdErrorMsg" returnId="false">returnErrorId information of GlobalConfig is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc=""
+                id="returnErrorValue" ifFalse="" ifTrue=""
+                name="returnErrorValue" sequence="6">
+                <dataType>boolean</dataType>
+                <attributes>returnErrorValue</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="returnErrorValueErrorMsg" returnId="false">returnErrorValue information of GlobalConfig is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc=""
+                id="toggleBreakpoint" ifFalse="" ifTrue=""
+                name="toggleBreakpoint" sequence="7">
+                <dataType>boolean</dataType>
+                <attributes>toggleBreakpoint</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="toggleBreakpointErrorMsg" returnId="false">toggleBreakpoint information of GlobalConfig is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+        </rules>
+    </object>
+    <object desc="" id="ObjectEntity" name="objectEntity">
+        <className>com.unibeta.vrules.base.ObjectEntity</className>
+        <nillable>false</nillable>
+        <rules>
+            <rule breakpoint="off" depends="" desc="" id="nill"
+                ifFalse="" ifTrue="" name="nill" sequence="1">
+                <dataType>boolean</dataType>
+                <attributes>nill</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="nillErrorMsg" returnId="false">nill information of ObjectEntity is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="className"
+                ifFalse="" ifTrue="" name="className" sequence="2">
+                <dataType>class java.lang.String</dataType>
+                <attributes>className</attributes>
+                <boolParam>$</boolParam>
+                <assert>className !=null </assert>
+                <errorMessage id="classNameErrorMsg" returnId="false">className information of ObjectEntity is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="description"
+                ifFalse="" ifTrue="" name="description" sequence="3">
+                <dataType>class java.lang.String</dataType>
+                <attributes>description</attributes>
+                <boolParam>$</boolParam>
+                <assert>description !=null </assert>
+                <errorMessage id="descriptionErrorMsg" returnId="false">description information of ObjectEntity is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="extension"
+                ifFalse="" ifTrue="" name="extension" sequence="4">
+                <dataType>class java.lang.String</dataType>
+                <attributes>extension</attributes>
+                <boolParam>$</boolParam>
+                <assert>extension !=null </assert>
+                <errorMessage id="extensionErrorMsg" returnId="false">extension information of ObjectEntity is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="id" ifFalse=""
+                ifTrue="" name="id" sequence="5">
+                <dataType>class java.lang.String</dataType>
+                <attributes>id</attributes>
+                <boolParam>$</boolParam>
+                <assert>id !=null </assert>
+                <errorMessage id="idErrorMsg" returnId="false">id information of ObjectEntity is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="name"
+                ifFalse="" ifTrue="" name="name" sequence="6">
+                <dataType>class java.lang.String</dataType>
+                <attributes>name</attributes>
+                <boolParam>$</boolParam>
+                <assert>name !=null </assert>
+                <errorMessage id="nameErrorMsg" returnId="false">name information of ObjectEntity is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="rules"
+                ifFalse="" ifTrue="" isCollection="true"
+                isComplexType="true" name="rules" recursive="true"
+                refId="Rule" sequence="7">
+                <binding foreach="" var="" wirings="Rule"/>
+                <dataType>interface java.util.List</dataType>
+                <attributes>rules</attributes>
+                <boolParam>$</boolParam>
+                <assert>rules !=null </assert>
+                <errorMessage id="rulesErrorMsg" returnId="false">rules information of ObjectEntity is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="sequence"
+                ifFalse="" ifTrue="" name="sequence" sequence="8">
+                <dataType>long</dataType>
+                <attributes>sequence</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="sequenceErrorMsg" returnId="false">sequence information of ObjectEntity is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+        </rules>
+    </object>
+    <object desc="" id="Rule" name="rule">
+        <className>com.unibeta.vrules.base.Rule</className>
+        <nillable>false</nillable>
+        <rules>
+            <rule breakpoint="off" depends="" desc="" id="binding"
+                ifFalse="" ifTrue="" isCollection="false"
+                isComplexType="true" name="binding" recursive="true"
+                refId="Binding" sequence="1">
+                <binding src="" var="" wirings="Binding"/>
+                <dataType>class com.unibeta.vrules.base.Rule$Binding</dataType>
+                <attributes>binding</attributes>
+                <boolParam>$</boolParam>
+                <assert>binding !=null </assert>
+                <errorMessage id="bindingErrorMsg" returnId="false">binding information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="breakpoint"
+                ifFalse="" ifTrue="" name="breakpoint" sequence="2">
+                <dataType>boolean</dataType>
+                <attributes>breakpoint</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="breakpointErrorMsg" returnId="false">breakpoint information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="complexType"
+                ifFalse="" ifTrue="" name="complexType" sequence="3">
+                <dataType>boolean</dataType>
+                <attributes>complexType</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="complexTypeErrorMsg" returnId="false">complexType information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="dataType"
+                ifFalse="" ifTrue="" name="dataType" sequence="4">
+                <dataType>class java.lang.String</dataType>
+                <attributes>dataType</attributes>
+                <boolParam>$</boolParam>
+                <assert>dataType !=null </assert>
+                <errorMessage id="dataTypeErrorMsg" returnId="false">dataType information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="depends"
+                ifFalse="" ifTrue="" name="depends" sequence="5">
+                <dataType>class java.lang.String</dataType>
+                <attributes>depends</attributes>
+                <boolParam>$</boolParam>
+                <assert>depends !=null </assert>
+                <errorMessage id="dependsErrorMsg" returnId="false">depends information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="desc"
+                ifFalse="" ifTrue="" name="desc" sequence="6">
+                <dataType>class java.lang.String</dataType>
+                <attributes>desc</attributes>
+                <boolParam>$</boolParam>
+                <assert>desc !=null </assert>
+                <errorMessage id="descErrorMsg" returnId="false">desc information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="errorMessage"
+                ifFalse="" ifTrue="" name="errorMessage" sequence="7">
+                <dataType>class java.lang.String</dataType>
+                <attributes>errorMessage</attributes>
+                <boolParam>$</boolParam>
+                <assert>errorMessage !=null </assert>
+                <errorMessage id="errorMessageErrorMsg" returnId="false">errorMessage information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="errorObject"
+                ifFalse="" ifTrue="" name="errorObject" sequence="8">
+                <dataType>class java.lang.Object</dataType>
+                <attributes>errorObject</attributes>
+                <boolParam>$</boolParam>
+                <assert>errorObject !=null </assert>
+                <errorMessage id="errorObjectErrorMsg" returnId="false">errorObject information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="id" ifFalse=""
+                ifTrue="" name="id" sequence="9">
+                <dataType>class java.lang.String</dataType>
+                <attributes>id</attributes>
+                <boolParam>$</boolParam>
+                <assert>id !=null </assert>
+                <errorMessage id="idErrorMsg" returnId="false">id information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="ifFalse"
+                ifFalse="" ifTrue="" name="ifFalse" sequence="10">
+                <dataType>class java.lang.String</dataType>
+                <attributes>ifFalse</attributes>
+                <boolParam>$</boolParam>
+                <assert>ifFalse !=null </assert>
+                <errorMessage id="ifFalseErrorMsg" returnId="false">ifFalse information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="ifTrue"
+                ifFalse="" ifTrue="" name="ifTrue" sequence="11">
+                <dataType>class java.lang.String</dataType>
+                <attributes>ifTrue</attributes>
+                <boolParam>$</boolParam>
+                <assert>ifTrue !=null </assert>
+                <errorMessage id="ifTrueErrorMsg" returnId="false">ifTrue information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="inputObjects"
+                ifFalse="" ifTrue="" name="inputObjects" sequence="12">
+                <dataType>class java.lang.String</dataType>
+                <attributes>inputObjects</attributes>
+                <boolParam>$</boolParam>
+                <assert>inputObjects !=null </assert>
+                <errorMessage id="inputObjectsErrorMsg" returnId="false">inputObjects information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="mapOrList"
+                ifFalse="" ifTrue="" name="mapOrList" sequence="13">
+                <dataType>boolean</dataType>
+                <attributes>mapOrList</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="mapOrListErrorMsg" returnId="false">mapOrList information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="name"
+                ifFalse="" ifTrue="" name="name" sequence="14">
+                <dataType>class java.lang.String</dataType>
+                <attributes>name</attributes>
+                <boolParam>$</boolParam>
+                <assert>name !=null </assert>
+                <errorMessage id="nameErrorMsg" returnId="false">name information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="outputBool"
+                ifFalse="" ifTrue="" name="outputBool" sequence="15">
+                <dataType>class java.lang.String</dataType>
+                <attributes>outputBool</attributes>
+                <boolParam>$</boolParam>
+                <assert>outputBool !=null </assert>
+                <errorMessage id="outputBoolErrorMsg" returnId="false">outputBool information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="predicate"
+                ifFalse="" ifTrue="" name="predicate" sequence="16">
+                <dataType>class java.lang.String</dataType>
+                <attributes>predicate</attributes>
+                <boolParam>$</boolParam>
+                <assert>predicate !=null </assert>
+                <errorMessage id="predicateErrorMsg" returnId="false">predicate information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="recursive"
+                ifFalse="" ifTrue="" name="recursive" sequence="17">
+                <dataType>boolean</dataType>
+                <attributes>recursive</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="recursiveErrorMsg" returnId="false">recursive information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="refId"
+                ifFalse="" ifTrue="" name="refId" sequence="18">
+                <dataType>class java.lang.String</dataType>
+                <attributes>refId</attributes>
+                <boolParam>$</boolParam>
+                <assert>refId !=null </assert>
+                <errorMessage id="refIdErrorMsg" returnId="false">refId information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="sequence"
+                ifFalse="" ifTrue="" name="sequence" sequence="19">
+                <dataType>long</dataType>
+                <attributes>sequence</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="sequenceErrorMsg" returnId="false">sequence information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="values"
+                ifFalse="" ifTrue="" name="values" sequence="20">
+                <dataType>interface java.util.Map</dataType>
+                <attributes>values</attributes>
+                <boolParam>$</boolParam>
+                <assert>values !=null </assert>
+                <errorMessage id="valuesErrorMsg" returnId="false">values information of Rule is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+        </rules>
+    </object>
+    <object desc="" id="VRuleSuite" name="vRuleSuite">
+        <className>com.unibeta.vrules.base.VRuleSuite</className>
+        <nillable>false</nillable>
+        <rules>
+            <rule breakpoint="off" depends="" desc="" id="contexts"
+                ifFalse="" ifTrue="" isCollection="true"
+                isComplexType="true" name="contexts" recursive="true"
+                refId="VRules4jContext" sequence="1">
+                <binding foreach="" var="" wirings="VRules4jContext"/>
+                <dataType>interface java.util.List</dataType>
+                <attributes>contexts</attributes>
+                <boolParam>$</boolParam>
+                <assert>contexts !=null </assert>
+                <errorMessage id="contextsErrorMsg" returnId="false">contexts information of VRuleSuite is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc=""
+                id="decisionConstantDefinitions" ifFalse="" ifTrue=""
+                isCollection="true" isComplexType="true"
+                name="decisionConstantDefinitions" recursive="true"
+                refId="DecisionConstantDefinition" sequence="2">
+                <binding foreach="" var="" wirings="DecisionConstantDefinition"/>
+                <dataType>interface java.util.List</dataType>
+                <attributes>decisionConstantDefinitions</attributes>
+                <boolParam>$</boolParam>
+                <assert>decisionConstantDefinitions !=null </assert>
+                <errorMessage id="decisionConstantDefinitionsErrorMsg" returnId="false">decisionConstantDefinitions information of VRuleSuite is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc=""
+                id="declaredMethods" ifFalse="" ifTrue=""
+                name="declaredMethods" sequence="3">
+                <dataType>class java.lang.String</dataType>
+                <attributes>declaredMethods</attributes>
+                <boolParam>$</boolParam>
+                <assert>declaredMethods !=null </assert>
+                <errorMessage id="declaredMethodsErrorMsg" returnId="false">declaredMethods information of VRuleSuite is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="globalConfig"
+                ifFalse="" ifTrue="" isCollection="false"
+                isComplexType="true" name="globalConfig"
+                recursive="true" refId="GlobalConfig" sequence="4">
+                <binding src="" var="" wirings="GlobalConfig"/>
+                <dataType>class com.unibeta.vrules.base.GlobalConfig</dataType>
+                <attributes>globalConfig</attributes>
+                <boolParam>$</boolParam>
+                <assert>globalConfig !=null </assert>
+                <errorMessage id="globalConfigErrorMsg" returnId="false">globalConfig information of VRuleSuite is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="imports"
+                ifFalse="" ifTrue="" name="imports" sequence="5">
+                <dataType>class java.lang.String</dataType>
+                <attributes>imports</attributes>
+                <boolParam>$</boolParam>
+                <assert>imports !=null </assert>
+                <errorMessage id="importsErrorMsg" returnId="false">imports information of VRuleSuite is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc=""
+                id="objectEntities" ifFalse="" ifTrue=""
+                isCollection="true" isComplexType="true"
+                name="objectEntities" recursive="true"
+                refId="ObjectEntity" sequence="6">
+                <binding foreach="" var="" wirings="ObjectEntity"/>
+                <dataType>interface java.util.Map</dataType>
+                <attributes>objectEntities</attributes>
+                <boolParam>$</boolParam>
+                <assert>objectEntities !=null </assert>
+                <errorMessage id="objectEntitiesErrorMsg" returnId="false">objectEntities information of VRuleSuite is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+        </rules>
+    </object>
+    <object desc="" id="VRules4jContext" name="vRules4jContext">
+        <className>com.unibeta.vrules.base.VRules4jContext</className>
+        <nillable>false</nillable>
+        <rules>
+            <rule breakpoint="off" depends="" desc="" id="className"
+                ifFalse="" ifTrue="" name="className" sequence="1">
+                <dataType>class java.lang.String</dataType>
+                <attributes>className</attributes>
+                <boolParam>$</boolParam>
+                <assert>className !=null </assert>
+                <errorMessage id="classNameErrorMsg" returnId="false">className information of VRules4jContext is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="name"
+                ifFalse="" ifTrue="" name="name" sequence="2">
+                <dataType>class java.lang.String</dataType>
+                <attributes>name</attributes>
+                <boolParam>$</boolParam>
+                <assert>name !=null </assert>
+                <errorMessage id="nameErrorMsg" returnId="false">name information of VRules4jContext is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error/>
+                        <errorCode>ERROR_CODE_1</errorCode>
+                        <errorMsg>ERROR_MSG_BAD</errorMsg>
+                    </errorInfo>
+                </decision>
+            </rule>
+        </rules>
+    </object>
+</vRules4j>

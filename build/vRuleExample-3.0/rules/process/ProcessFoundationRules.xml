@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	@gt > 
+	@lt < 
+	@lteq <= 
+	@gteq >= 
+	@or || 
+	@and && 
+	@bitwise_and & 
+	@bitwise_or | 
+	@left_shift << 
+	@right_shift >> 
+	@right_unsigned_shift >>> 
+	@and_assign &= 
+	@or_assign |= 
+	@left_shift_assign <<= 
+	@right_shift_assign >>= 
+	@right_unsigned_shift_assign >>>= 
+	
+	$Powered By vRules4j-Digester Automatically On Mon Apr 25 00:42:24 CST 2011$
+	Visit http://sourceforge.net/projects/vrules/ to download the latest version
+	
+	Author: jordan.xue
+-->
+<vRules4j>
+	<globalConfig>
+		<decisionMode>false</decisionMode>
+		<returnErrorId>false</returnErrorId>
+		<displayErrorValue>true</displayErrorValue>
+		<toggleBreakpoint>off</toggleBreakpoint>
+		<includes></includes>
+	</globalConfig>
+	<imports>
+		examples.process.model.ServiceContext;
+		examples.process.ServiceRule;
+		examples.process.model.ProcessRuleModel;
+	</imports>
+	<contexts>
+		<context className="examples.process.model.ServiceContext"
+			name="c" />
+	</contexts>
+	<javaBody>
+		boolean invoke(String className,ServiceContext serviceContext)
+		throws Exception{
+
+		Class clazz = Class.forName(className); Object obj =
+		clazz.newInstance(); ServiceRule rule = null;
+
+		if(obj instanceof ServiceRule){ rule = (ServiceRule)obj;
+		rule.process(serviceContext); }
+
+		return true; }
+	</javaBody>
+	<decisionConstants>
+		<definition name="" value="" />
+	</decisionConstants>
+</vRules4j>

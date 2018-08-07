@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+@gt > 
+@lt < 
+@lteq <= 
+@gteq >= 
+@or || 
+@and && 
+@bitwise_and & 
+@bitwise_or | 
+@left_shift << 
+@right_shift >> 
+@right_unsigned_shift >>> 
+@and_assign &= 
+@or_assign |= 
+@left_shift_assign <<= 
+@right_shift_assign >>= 
+@right_unsigned_shift_assign >>>= 
+
+$Powered By vRules4j-Digester Automatically On Tue Nov 05 03:40:59 CST 2013$
+Visit http://sourceforge.net/projects/vrules/ to download the latest version
+
+Author: jordan.xue
+-->
+<vRules4j>
+    <global>
+        <decisionMode>false</decisionMode>
+        <assertion>false</assertion>
+        <returnErrorId>false</returnErrorId>
+        <displayErrorValue>true</displayErrorValue>
+        <toggleBreakpoint>off</toggleBreakpoint>
+        <includes/>
+    </global>
+    <imports/>
+    <java/>
+    <contexts>
+        <context className="examples.cases.Son" name="Son"/>
+        <context className="examples.cases.Family" name="Family"/>
+        <context className="examples.cases.Father" name="Father"/>
+    </contexts>
+    <decisionConstants>
+        <definition name="" value=""/>
+    </decisionConstants>
+    <object desc="" id="Family" name="family">
+        <className>examples.cases.Family</className>
+        <nillable>false</nillable>
+        <rules>
+            <rule breakpoint="off" depends="" desc="" id="father"
+                ifFalse="" ifTrue="" isComplexType="true"
+                isMapOrList="false" name="father" recursive="true"
+                refId="Father" sequence="1">
+                <dataType>class examples.cases.Father</dataType>
+                <attributes>father</attributes>
+                <boolParam>$</boolParam>
+                <assert>father !=null </assert>
+                <errorMessage id="fatherErrorMsg" returnId="false">father information of Family is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="members"
+                ifFalse="" ifTrue="" name="members" sequence="2">
+                <dataType>int</dataType>
+                <attributes>members</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="membersErrorMsg" returnId="false">members information of Family is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="rich"
+                ifFalse="" ifTrue="" name="rich" sequence="3">
+                <dataType>boolean</dataType>
+                <attributes>rich</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="richErrorMsg" returnId="false">rich information of Family is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="son"
+                ifFalse="" ifTrue="" isComplexType="true"
+                isMapOrList="false" name="son" recursive="true"
+                refId="Son" sequence="4">
+                <dataType>class examples.cases.Son</dataType>
+                <attributes>son</attributes>
+                <boolParam>$</boolParam>
+                <assert>son !=null </assert>
+                <errorMessage id="sonErrorMsg" returnId="false">son information of Family is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="totalIncome"
+                ifFalse="" ifTrue="" name="totalIncome" sequence="5">
+                <dataType>double</dataType>
+                <attributes>totalIncome</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="totalIncomeErrorMsg" returnId="false">totalIncome information of Family is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+        </rules>
+    </object>
+    <object desc="" extensions="Family" id="Father" name="father">
+        <className>examples.cases.Father</className>
+        <nillable>false</nillable>
+        <rules>
+            <rule breakpoint="off" depends="" desc="" id="age"
+                ifFalse="" ifTrue="" name="age" sequence="1">
+                <dataType>int</dataType>
+                <attributes>age</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="ageErrorMsg" returnId="false">age information of Father is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="income"
+                ifFalse="" ifTrue="" name="income" sequence="2">
+                <dataType>class java.lang.Double</dataType>
+                <attributes>income</attributes>
+                <boolParam>$</boolParam>
+                <assert>income !=null </assert>
+                <errorMessage id="incomeErrorMsg" returnId="false">income information of Father is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="name"
+                ifFalse="" ifTrue="" name="name" sequence="3">
+                <dataType>class java.lang.String</dataType>
+                <attributes>name</attributes>
+                <boolParam>$</boolParam>
+                <assert>name !=null </assert>
+                <errorMessage id="nameErrorMsg" returnId="false">name information of Father is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="sonArray"
+                ifFalse="" ifTrue="" isComplexType="true"
+                isMapOrList="true" name="sonArray" recursive="true"
+                refId="Son" sequence="4">
+                <dataType>examples.cases.Son[]</dataType>
+                <attributes>sonArray</attributes>
+                <boolParam>$</boolParam>
+                <assert>sonArray !=null </assert>
+                <errorMessage id="sonArrayErrorMsg" returnId="false">sonArray information of Father is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="sonList"
+                ifFalse="" ifTrue="" name="sonList" sequence="5">
+                <dataType>interface java.util.List</dataType>
+                <attributes>sonList</attributes>
+                <boolParam>$</boolParam>
+                <assert>sonList !=null </assert>
+                <errorMessage id="sonListErrorMsg" returnId="false">sonList information of Father is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="sonMap"
+                ifFalse="" ifTrue="" name="sonMap" sequence="6">
+                <dataType>interface java.util.Map</dataType>
+                <attributes>sonMap</attributes>
+                <boolParam>$</boolParam>
+                <assert>sonMap !=null </assert>
+                <errorMessage id="sonMapErrorMsg" returnId="false">sonMap information of Father is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="weight"
+                ifFalse="" ifTrue="" name="weight" sequence="7">
+                <dataType>double</dataType>
+                <attributes>weight</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="weightErrorMsg" returnId="false">weight information of Father is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+        </rules>
+    </object>
+    <object desc="" id="ISon" name="iSon">
+        <className>examples.cases.ISon</className>
+        <nillable>false</nillable>
+        <rules>
+            <rule breakpoint="off" depends="" desc="" id="age"
+                ifFalse="" ifTrue="" name="age" sequence="1">
+                <dataType>int</dataType>
+                <attributes>age</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="ageErrorMsg" returnId="false">age information of ISon is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="id" ifFalse=""
+                ifTrue="" name="id" sequence="2">
+                <dataType>int</dataType>
+                <attributes>id</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="idErrorMsg" returnId="false">id information of ISon is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="name"
+                ifFalse="" ifTrue="" name="name" sequence="3">
+                <dataType>class java.lang.String</dataType>
+                <attributes>name</attributes>
+                <boolParam>$</boolParam>
+                <assert>name !=null </assert>
+                <errorMessage id="nameErrorMsg" returnId="false">name information of ISon is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="tall"
+                ifFalse="" ifTrue="" name="tall" sequence="4">
+                <dataType>class java.lang.Double</dataType>
+                <attributes>tall</attributes>
+                <boolParam>$</boolParam>
+                <assert>tall !=null </assert>
+                <errorMessage id="tallErrorMsg" returnId="false">tall information of ISon is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+            <rule breakpoint="off" depends="" desc="" id="weight"
+                ifFalse="" ifTrue="" name="weight" sequence="5">
+                <dataType>double</dataType>
+                <attributes>weight</attributes>
+                <boolParam>$</boolParam>
+                <assert> true </assert>
+                <errorMessage id="weightErrorMsg" returnId="false">weight information of ISon is invalid.</errorMessage>
+                <decision>
+                    <errorInfo>
+                        <error>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </error>
+                        <errorCode>CODE_1</errorCode>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorField>
+                            <errorId>ERROR_ID_1</errorId>
+                            <XPath/>
+                        </errorField>
+                        <errorMsg/>
+                        <XPath/>
+                    </errorInfo>
+                </decision>
+            </rule>
+        </rules>
+    </object>
+    <object desc="" extensions="Father,ISon" id="Son" name="son">
+        <className>examples.cases.Son</className>
+        <nillable>false</nillable>
+        <rules/>
+    </object>
+</vRules4j>

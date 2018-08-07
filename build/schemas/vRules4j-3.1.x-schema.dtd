@@ -1,0 +1,124 @@
+<?xml encoding="utf-8"?>
+
+<!ELEMENT vRules4j (global,imports,java,contexts,decisionConstants,object+)>
+<!ATTLIST vRules4j
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT global (decisionMode,assertion,returnErrorId,displayErrorValue,
+                  toggleBreakpoint,includes)>
+<!ATTLIST global
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT imports EMPTY>
+<!ATTLIST imports
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT java EMPTY>
+<!ATTLIST java
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT contexts (context)>
+<!ATTLIST contexts
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT decisionConstants (definition)>
+<!ATTLIST decisionConstants
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT object (className,nillable,rules)>
+<!ATTLIST object
+    xmlns CDATA #FIXED ''
+    desc CDATA #REQUIRED
+    extensions CDATA #IMPLIED
+    id  #REQUIRED
+    name  #REQUIRED>
+
+<!ELEMENT decisionMode (#PCDATA)>
+<!ATTLIST decisionMode
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT assertion (#PCDATA)>
+<!ATTLIST assertion
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT returnErrorId (#PCDATA)>
+<!ATTLIST returnErrorId
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT displayErrorValue (#PCDATA)>
+<!ATTLIST displayErrorValue
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT toggleBreakpoint (#PCDATA)>
+<!ATTLIST toggleBreakpoint
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT includes EMPTY>
+<!ATTLIST includes
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT context EMPTY>
+<!ATTLIST context
+    xmlns CDATA #FIXED ''
+    className  #REQUIRED
+    name  #REQUIRED>
+
+<!ELEMENT definition EMPTY>
+<!ATTLIST definition
+    xmlns CDATA #FIXED ''
+    name CDATA #REQUIRED
+    value CDATA #REQUIRED>
+
+<!ELEMENT className (#PCDATA)>
+<!ATTLIST className
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT nillable (#PCDATA)>
+<!ATTLIST nillable
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT rules (rule)+>
+<!ATTLIST rules
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT rule (dataType,attributes,boolParam,assert,errorMessage,decision)>
+<!ATTLIST rule
+    xmlns CDATA #FIXED ''
+    breakpoint  #REQUIRED
+    depends CDATA #REQUIRED
+    desc CDATA #REQUIRED
+    id  #REQUIRED
+    ifFalse CDATA #REQUIRED
+    ifTrue CDATA #REQUIRED
+    isComplexType  #IMPLIED
+    isMapOrList  #IMPLIED
+    name  #REQUIRED
+    recursive  #IMPLIED
+    refId  #IMPLIED
+    sequence  #REQUIRED>
+
+<!ELEMENT dataType (#PCDATA)>
+<!ATTLIST dataType
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT attributes (#PCDATA)>
+<!ATTLIST attributes
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT boolParam (#PCDATA)>
+<!ATTLIST boolParam
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT assert (#PCDATA)>
+<!ATTLIST assert
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT errorMessage (#PCDATA)>
+<!ATTLIST errorMessage
+    xmlns CDATA #FIXED ''
+    id  #REQUIRED
+    returnId  #REQUIRED>
+
+<!ELEMENT decision EMPTY>
+<!ATTLIST decision
+    xmlns CDATA #FIXED ''>

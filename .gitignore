@@ -1,0 +1,10 @@
+/backup/*
+/bin/*
+/classes/*
+/dist/*
+/doc1/*
+/releases/*
+/javadoc/*
+/doc/*
+/.settings/*
+/test/*

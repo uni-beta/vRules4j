@@ -1,0 +1,13 @@
+activation.jar
+beanshell-2.0b4.jar
+commons-beanutils.jar
+commons-logging-1.0.4.jar
+jaxb-api.jar
+jaxb-impl.jar
+jaxb-xjc.jar
+jaxb1-impl.jar
+jsr173_1.0_api.jar
+log4j-1.2.9.jar
+vRules4j-2.0.1-src.zip
+vRules4j-2.0.6.jar
+xercesImpl.jar

@@ -1,0 +1,130 @@
+   其实说起注解语法，对于任何一个Java开发人员来说都已经耳熟能详了，我们每天都在使用着 @author, @param,等等编写注释，然后用javadoc生成文档。Java的这种方便的文档生成方法受到了开发者的普遍赞誉。而从JDK1.5开始，注释语法提供了更为强大的功能。
+
+
+   我们先谈谈注释语法本身，它有时候也称为meta-data  ：“描述数据的数据” 。一般来说它们可以被用来生成文档，检查代码间依赖关系，帮助编译器作语法检查。时下比较流行的工具有Xdoclet等。对于文档生成早已经有了javadoc工具的完美表现，而对于代码检查，如今java也提供了语言级的支持。
+    
+    我们知道，javadoc是通过提取java源文件中的标签信息来生成文档。所以要学习新的注释语法，们首先要熟悉的就是新增的标签。新的注释语法支持两种标签，系统标准标签和用户自定义标签。标签的符号也原先一样，@符号加上标签名字。我们先从JDK1.5自带的标准标签说起。
+
+    首先介绍@override , 也不用多罗嗦，顾名思义了，就是用来说明方法覆载的。我们假设有一个子类必须要覆载父类的方法.
+
+================================================================================
+public class Parent{
+
+    public void foo(){
+        System.out.println("Original Implementation of foo");
+    }
+
+}
+
+public class Child extends Parent{
+
+    @Override
+    public void foo(){
+        System.out.println("Overide Implementation of foo");
+    }
+
+}
+================================================================================
+
+    目前为止我们看不出来这个@Override给我们带来了任何好处，所以我们先说说加个这个标签后，我们用javac编译的时候编译器执行了些什么呢？编译器会检查这个方法，然后从父类查找是否有这个方法，否则就编译出错。这个特性可以帮助我们避免一些低级错误。上面这个例子，子类想覆载foo()方法，不过你可能一时疏忽把它写成了fob(), 对于这样的”低级错误”,如果你没有在前期就发现的话，到系统集成测试的时候，可能会化上你几个小时甚至一两天去找出这样的bug。现在好了，编译器在编译的时候就会给出错误，
+
+Child.java:3: method does not override a method from its superclass
+    @Override
+     ^
+1 error
+怎么样，这个功能还不错吧。
+
+    看过了标准标签的使用方法，我们来看看用户自定义标签。首先介绍@interface, 它用于定义新的注释类型（annotation type）。新建一个注释类型看起来和定义一Interface 没有什么两样，
+MyTag.java用于新建一个用户自定义标签，代码如下，
+
+＝===============================================================================
+package tiger.annotation;
+/**
+ * 用户自定义标签??MyTag
+ */
+public @interface MyTag { }
+
+定义了一个tag之后，我们就可以在任何java文件中使用这个tag了，
+import tiger.annotation.MyTag;
+public class TagTest{
+    
+    @MyTag
+    public void testTag(){
+    }
+}
+===============================================================================
+
+注释类型还可以有成员变量，
+
+==============================================================================
+package tiger.annotation;
+/**
+ * 用户自定义标签??带有成员变量的MyTag
+ */
+public @interface MyTag {
+
+    String name();
+
+    int age();
+}
+=============================================================================
+
+然后我们可以这么使用这个标签，
+    @MyTag(name="MyTag",age=1)
+    public void testTag(){
+    }
+
+    使用标签最终是为了帮助开发人员提取注释信息，然后根据不同需求做进一步处理，下面我们来看看如何获取注释信息。
+
+=============================================================================
+import java.lang.annotation.Annotation;
+import tiger.annotation.MyTag;
+public class TagTest{
+    
+    @MyTag(name="MyTag",age=1)
+    public void test(){
+    }
+
+    public static void main(String[] args){
+        TagTest tt = new TagTest();
+        try {
+            Annotation[] annotation =tt.getClass().getMethod("test").getAnnotations();
+            for (Annotation tag :annotation)  {             
+              System.out.println("Tag is:" + tag); 
+              System.out.println("tag.name()" + ((MyTag)tag).name());
+              System.out.println("tag.age()" + ((MyTag)(tag)).age());
+             } 
+         } catch(NoSuchMethodException e) { 
+             e.printStackTrace(); 
+         } 
+    }
+}
+===============================================================================
+
+    需要注意的一点是，在执行这段代码之前我们还有一点小工作要做，还需要给我们的自定义标签MyTag加上一个说明标签，@ Retention, 表明注释信息将可以在运行时刻通过反射机制得到。如果不加入这个标签，上面的代码将没有任何输出。修改以后的MyTag如下，
+
+================================================================================
+/**
+ * 用户自定义标签??带有成员变量的MyTag
+ */
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MyTag {
+
+    String name();
+
+    int age();
+}
+================================================================================
+
+然后我们执行TagTest可以得到输出如下，
+
+
+Tag is:@tiger.annotation.MyTag(name=MyTag, age=1)
+tag.name()MyTag
+tag.age()1
+
+    好了，Tiger新的注释语法基本用法就这么简单，基本用法虽然简单，但是获取注释信息之后如何处理确很值得推敲，我们可以用他们来做一些语法检查，文件相关性检查，进行各种统计等等。关于更多的Tiger新注释语法的信息，可以访问[link=http://java.sun.com/j2se/1.5.0/docs/guide/language/annotations.html]。
+
+
+以上代码在win2k + j2se5 GA下通过。
+曹伟(tec_caowei@hotmail.com).
