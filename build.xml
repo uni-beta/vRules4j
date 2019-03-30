@@ -4,7 +4,7 @@
 	<property file="build.properties"/>
 	<!-- set global properties for this build -->
 	<property name="project.name" value="vRules4j"/>
-	<property name="version" value="3.3.4"/>
+	<property name="version" value="3.3.5"/>
 	<property name="src" location="src"/>
 	<property name="build.dir" location="build"/>
 	<property name="build.config.dir" location="build/config"/>
@@ -63,13 +63,14 @@
 			/> -->
 
 		<copydir src="${src}" dest="${build.dir}/src"/>
-		<javadoc additionalparam="-locale en_US " access="public" author="true" 
+		
+		<!-- <javadoc additionalparam="-locale en_US " access="public" author="true" 
 		classpath="lib/xmlParserAPIs.jar;lib/jaxb-impl.jar;lib/jdom.jar;lib/xercesImpl.jar;lib/xstream-1.3.1.jar;lib/xerces-2.6.2.jar;lib/commons-logging-1.0.4.jar;lib/xstream-benchmark-1.3.1.jar;lib/jsr173_1.0_api.jar;lib/jaxb-xjc.jar;lib/xml-apis.jar;lib/junitperf-1.9.1.jar;lib/log4j-1.2.9.jar;lib/dom4j-1.6.1.jar;C:\Program Files\Java\jdk1.7.0_01\lib\tools.jar;lib/javaee.jar;lib/jaxb-api.jar;lib/beanshell-2.0b4.jar;lib/commons-beanutils.jar;lib/xercesSamples.jar;lib/junit-4.11-SNAPSHOT-20120805-1225.jar" 
 		destdir="javadoc" doctitle="vRules4j API Javadoc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" 
 		packagenames="com.unibeta.vrules.annotation,com.unibeta.vrules.tools,com.unibeta.vrules.servlets,com.unibeta.vrules.engines" 
 		source="1.7" 
 		sourcefiles="src/com/unibeta/vrules/base/vRules4j.java" sourcepath="src;" splitindex="true" use="true" version="true"/>
-		
+		-->
 		<copydir src="javadoc" dest="${build.dir}/javadoc"/>
 		<copydir src="releases\common" dest="${build.dir}/"/>
 

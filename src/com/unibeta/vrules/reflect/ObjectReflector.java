@@ -52,6 +52,7 @@ public class ObjectReflector {
 
     private static final String JAVA_LANG_BOOLEAN = VRulesConstants.JAVA_LANG_BOOLEAN;
     private static final String BOOLEAN = VRulesConstants.JAVA_BOOLEAN;
+    private static Map<String, Field[]>javaBeanFieldsMap = new HashMap<String, Field[]>();
 
     /**
      * Reflects the value for every specified attributes.
@@ -80,7 +81,7 @@ public class ObjectReflector {
             String parameters[] = rule.getInputObjects().split(",");
             for (int j = 0; j < parameters.length; j++) {
                 Object object = null;
-                String generateMethodNmae = generateMethodNmae(parameters[j], cls);
+                String generateMethodNmae = generateMethodName(parameters[j], cls);
                 
 				if (generateMethodNmae != null) {
 					Method method = cls.getMethod(generateMethodNmae, null);
@@ -190,7 +191,7 @@ public class ObjectReflector {
                 Method method = null;
                 String generateMethodNmae = null;
                 try {
-                    generateMethodNmae = generateMethodNmae(parameters[j], cls);
+                    generateMethodNmae = generateMethodName(parameters[j], cls);
                     if(null!= generateMethodNmae){
                     	method = cls.getMethod(generateMethodNmae, null);
                     }else{
@@ -257,7 +258,7 @@ public class ObjectReflector {
      * @return
      * @throws Exception
      */
-    public static String generateMethodNmae(String parameterName, Class clazz)
+    public static String generateMethodName(String parameterName, Class clazz)
             throws Exception {
 
         String id = parameterName.trim();
@@ -438,6 +439,10 @@ public class ObjectReflector {
      * @throws Exception
      */
     public static Field[] getAllJavaBeanFields(Class clazz) throws Exception {
+    	
+    	if(null != javaBeanFieldsMap.get(clazz.getCanonicalName())){
+    		return javaBeanFieldsMap.get(clazz.getCanonicalName());
+    	}
 
         List fieldList = new ArrayList();
 
@@ -449,14 +454,17 @@ public class ObjectReflector {
         for (int i = 0; i < fieldList.size(); i++) {
             Field field = (Field) fieldList.get(i);
 
-            String generateMethodNmae = ObjectReflector.generateMethodNmae(
+            String generateMethodNmae = ObjectReflector.generateMethodName(
                     field.getName(), clazz);
 			if (null== generateMethodNmae || !methodNameList.contains(generateMethodNmae)) {
                 fieldList.remove(i);
             }
         }
 
-        return (Field[]) fieldList.toArray(new Field[] {});
+        Field[] array = (Field[]) fieldList.toArray(new Field[] {});
+        javaBeanFieldsMap.put(clazz.getCanonicalName(), array);
+        
+		return array;
     }
 
     private static List generatePublicMethodNames(Class clazz) {

@@ -66,7 +66,7 @@ public class VRulesCommonUtils {
                     distillXmlElementWrapperName(annotations, name));
 
             try {
-                String generateMethodNmae = ObjectReflector.generateMethodNmae(name, clazz);
+                String generateMethodNmae = ObjectReflector.generateMethodName(name, clazz);
                 
                 
 				if (null != generateMethodNmae) {

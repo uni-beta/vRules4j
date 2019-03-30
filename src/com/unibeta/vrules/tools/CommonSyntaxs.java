@@ -23,12 +23,26 @@ public class CommonSyntaxs {
     private static final String REGEX_MININUTE = "(?:0[0-9]|1[0-9]|2[0-9]|4[0-9]|5[0-9]|6[0])";
     private static final String REGEX_SECOND = "(?:0[0-9]|1[0-9]|2[0-9]|4[0-9]|5[0-9]|6[0])";
 
-    /**
+    private static boolean enablePrint = true;
+    
+    public static boolean isEnablePrint() {
+		return enablePrint;
+	}
+
+	public static void setEnablePrint(boolean enablePrint) {
+		CommonSyntaxs.enablePrint = enablePrint;
+	}
+
+	/**
      * println
      * 
      * @param o
      */
     public static void println(Object... args) {
+    	
+    	if(!enablePrint){
+    		return;
+    	}
 
     	print(args);
     	System.out.println();
@@ -40,6 +54,10 @@ public class CommonSyntaxs {
      * @param o
      */
 	public static void print(Object... args) {
+		
+		if(!enablePrint){
+			return;
+		}
 
 		if (null != args) {
 			for (Object o : args) {
