@@ -19,18 +19,21 @@
  */
 package com.unibeta.vrules.constant;
 
+import java.lang.management.ManagementFactory;
+
 /**
  * @author Jordan.Xue
  */
 public class VRulesConstants {
-    public static final String $_ERROR_MESSAGE_FLAG = "$[errorMessage]:=";
-    public static final String $_X_PATH = "${xPath}:=";
-    public static final String JAVA_OBJECTS = "java.";
-    public static final String NILLABLE_ERROR = "[NillableError]";
-    public static final String NEED_DISPLAY_COLLECTION_NAME_FLAG= "#";
-    
-    public static final String JAVA_LANG_BOOLEAN = "java.lang.Boolean";
-    public static final String JAVA_BOOLEAN = "boolean";
-    
-    public static final String DYNAMIC_CLASSES_FOLDER_NAME = ".bin";
+	public static final String $_ERROR_MESSAGE_FLAG = "$[errorMessage]:=";
+	public static final String $_X_PATH = "${xPath}:=";
+	public static final String JAVA_OBJECTS = "java.";
+	public static final String NILLABLE_ERROR = "[NillableError]";
+	public static final String NEED_DISPLAY_COLLECTION_NAME_FLAG = "#";
+
+	public static final String JAVA_LANG_BOOLEAN = "java.lang.Boolean";
+	public static final String JAVA_BOOLEAN = "boolean";
+
+	public static final String DYNAMIC_CLASSES_FOLDER_NAME = "." + ManagementFactory.getRuntimeMXBean().getName()
+			+ ".bin";// ".bin";
 }
