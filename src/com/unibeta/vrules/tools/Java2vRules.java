@@ -759,13 +759,13 @@ public class Java2vRules {
                 str.append(rule.getPredicate());
                 str.append("</assert>").append(BR);
                 str.append(getIntention(2))
-                        .append("<errorMessage id=\""
+                        .append("<message id=\""
                                 + attributeName + "ErrorMsg"
                                 + "\" returnErrorId=\"false\">");
 
                 str.append(rule.getErrorMessage());
 
-                str.append("</errorMessage>").append(BR);
+                str.append("</message>").append(BR);
 
                 str.append(getIntention(2)).append("<decision>").append(BR);
 

@@ -189,7 +189,7 @@ public class vRules4j {
             public String boolParam = "$";
             @XmlElement(name = "assert")
             public String assert_ = "";
-            @XmlElement
+            @XmlElement(name = "message")
             public ErrorMessage errorMessage = new ErrorMessage();
             @XmlElement
             public String decision = "";

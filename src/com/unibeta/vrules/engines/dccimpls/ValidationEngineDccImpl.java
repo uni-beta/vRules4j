@@ -47,312 +47,285 @@ import com.unibeta.vrules.utils.CommonUtils;
  */
 public class ValidationEngineDccImpl implements ValidationEngine {
 
-    private static final String $JORDAN_XUE$ = "$jordan.xue$";
-    private static final String GET = "get";
-    private static final String SET = "set";
-
-    private String currentErrorSequenceId = "0";
-    protected String engineMode = null;
-
-    /**
-     * @see com.unibeta.vrules.engines.ValidationEngine.validate()$
-     */
-    public String[] validate(Object object, String fileName) throws Exception {
-
-        if (null == object) {
-            throw new RuntimeException("The input valdation object is null!");
-        }
-
-        String id = CommonUtils.getClassSimpleName(object.getClass());
-        return parseErrorStrings(validate(object, fileName, id));
-    }
-
-    /**
-     * @see com.unibeta.vrules.engines.ValidationEngine.validate()$
-     */
-    public String[] validate(Object object, String fileName, String entityId)
-            throws Exception {
-
-        if (null == object) {
-            throw new RuntimeException("The input valdation object is null!");
-        }
-
-        CoreDccEngine coreDccEngine = new CoreDccEngine();
-
-        return parseErrorStrings(coreDccEngine.validate(object, fileName,
-                entityId,null,engineMode));
-    }
-
-    /**
-     * @see com.unibeta.vrules.engines.ValidationEngine.validate()$
-     */
-    public String[] validate(Object[] objects, String fileName)
-            throws Exception {
-
-        if (null == objects) {
-            throw new RuntimeException("The input valdation object is null!");
-        }
-
-        Map objMap = Collections.synchronizedMap(new LinkedHashMap<String, Object>());
-        
-        for (int i = 0; i < objects.length; i++) {
-            Object object = objects[i];
-            
-            if (null!=object) {
-                objMap.put(CommonUtils.getClassSimpleName(object.getClass()),
-                        object);
-            }
-        }
-
-        CoreDccEngine coreDccEngine = new CoreDccEngine();
-        return parseErrorStrings(coreDccEngine.validate(objMap, fileName, null,null,engineMode));
-    }
-
-    public List validate(Object[] objects, String fileName, Object errorObj)
-            throws Exception {
-        
-        if (null == objects) {
-            throw new RuntimeException("The input valdation object is null!");
-        }
-        if (null == errorObj) {
-            throw new RuntimeException(
-                    "The input register error object is null!");
-        }
-
-        Map objMap = Collections.synchronizedMap(new LinkedHashMap<String, Object>());
-        
-        for (int i = 0; i < objects.length; i++) {
-            Object object = objects[i];
-            if (null != object) {
-                objMap.put(CommonUtils.getClassSimpleName(object.getClass()),
-                        object);
-            }
-        }
-        
-        CoreDccEngine coreDccEngine = new CoreDccEngine();
-        String[] errorStrs = (String[]) coreDccEngine.validate(objMap, fileName, null,errorObj,engineMode);
-        
-        return generateErrorObject(errorStrs, errorObj.getClass());
-    }
-
-    public List validate(Object object, String fileName, Object errorObj)
-            throws Exception {
-
-        if (null == object || null == errorObj) {
-            throw new RuntimeException(
-                    "The input valdation object or register error object is null!");
-        }
-
-        CoreDccEngine coreDccEngine = new CoreDccEngine();
-
-        String id = CommonUtils.getClassSimpleName(object.getClass());
-        String[] errorStrs = coreDccEngine.validate(object, fileName, id,errorObj,engineMode);
-
-        return generateErrorObject(errorStrs, errorObj.getClass());
-    }
+	private static final String $JORDAN_XUE$ = "$jordan.xue$";
+	private static final String GET = "get";
+	private static final String SET = "set";
 
-    public List validate(Object object, String fileName, String entityId,
-            Object errorObj) throws Exception {
+	private String currentErrorSequenceId = "0";
+	protected String engineMode = null;
 
-        if (null == object || null == errorObj) {
-            throw new RuntimeException(
-                    "The input valdation object or register error object is null!");
-        }
+	/**
+	 * @see com.unibeta.vrules.engines.ValidationEngine.validate()$
+	 */
+	public String[] validate(Object object, String fileName) throws Exception {
 
-        CoreDccEngine coreDccEngine = new CoreDccEngine();
+		if (null == object) {
+			throw new RuntimeException("The input valdation object is null!");
+		}
 
-        String[] errorStrs = coreDccEngine.validate(object, fileName, entityId,errorObj,engineMode);
+		String id = CommonUtils.getClassSimpleName(object.getClass());
+		return parseErrorStrings(validate(object, fileName, id));
+	}
 
-        return generateErrorObject(errorStrs, errorObj.getClass());
-    }
+	/**
+	 * @see com.unibeta.vrules.engines.ValidationEngine.validate()$
+	 */
+	public String[] validate(Object object, String fileName, String entityId) throws Exception {
 
-    private List generateErrorObject(String[] errorStrs, Class class1)
-            throws Exception {
+		if (null == object) {
+			throw new RuntimeException("The input valdation object is null!");
+		}
 
-        if (null == errorStrs || errorStrs.length == 0) {
-            return null;
-        }
+		CoreDccEngine coreDccEngine = new CoreDccEngine();
 
-        List list = new ArrayList();
-        for (String err : errorStrs) {
+		return parseErrorStrings(coreDccEngine.validate(object, fileName, entityId, null, engineMode));
+	}
 
-            int i = err.indexOf(VRulesConstants.$_ERROR_MESSAGE_FLAG);
+	/**
+	 * @see com.unibeta.vrules.engines.ValidationEngine.validate()$
+	 */
+	public String[] validate(Object[] objects, String fileName) throws Exception {
 
-            String id = null;
-            if (i < 0) {
-                // continue;
-                err = $JORDAN_XUE$ + VRulesConstants.NILLABLE_ERROR + ": "
-                        + err;
-                id = currentErrorSequenceId;
-            } else {
-                id = err.substring(0, i);
-                currentErrorSequenceId = id;
-            }
+		if (null == objects) {
+			throw new RuntimeException("The input valdation object is null!");
+		}
 
-            Object error = new Object();
-            Object error2 = ErrorObjectPoolManager.getError(id);
+		Map objMap = Collections.synchronizedMap(new LinkedHashMap<String, Object>());
 
-            if (null != error2) {
-                error = BeanUtils.cloneBean(error2);
-            }
+		for (int i = 0; i < objects.length; i++) {
+			Object object = objects[i];
 
-            if (null != error) {
+			if (null != object) {
+				objMap.put(CommonUtils.getClassSimpleName(object.getClass()), object);
+			}
+		}
 
-                String errorMsg = err;
-                if (errorMsg.indexOf($JORDAN_XUE$) < 0) {
-                    errorMsg = err
-                            .substring(
-                                    err.indexOf(VRulesConstants.$_ERROR_MESSAGE_FLAG) + 17,
-                                    err.indexOf(VRulesConstants.$_X_PATH));
-                }
-                String xPath = err.substring(err
-                        .indexOf(VRulesConstants.$_X_PATH) + 10);
+		CoreDccEngine coreDccEngine = new CoreDccEngine();
+		return parseErrorStrings(coreDccEngine.validate(objMap, fileName, null, null, engineMode));
+	}
 
-                error = fillValidationResultValue(errorMsg, error);
-                error = fillValidationResultValue(xPath, error);
+	public List validate(Object[] objects, String fileName, Object errorObj) throws Exception {
 
-                list.add(error);
-            }
-        }
+		if (null == objects) {
+			throw new RuntimeException("The input valdation object is null!");
+		}
+		if (null == errorObj) {
+			throw new RuntimeException("The input register error object is null!");
+		}
 
-        // printErrorInfo();
-        return list;
-    }
+		Map objMap = Collections.synchronizedMap(new LinkedHashMap<String, Object>());
 
-    private Object fillValidationResultValue(String value, Object errorObj)
-            throws Exception {
+		for (int i = 0; i < objects.length; i++) {
+			Object object = objects[i];
+			if (null != object) {
+				objMap.put(CommonUtils.getClassSimpleName(object.getClass()), object);
+			}
+		}
 
-        Class cls = errorObj.getClass();
+		CoreDccEngine coreDccEngine = new CoreDccEngine();
+		String[] errorStrs = (String[]) coreDccEngine.validate(objMap, fileName, null, errorObj, engineMode);
 
-        Field[] fields = ObjectReflector.getAllJavaBeanFields(cls);
+		return generateErrorObject(errorStrs, errorObj.getClass());
+	}
 
-        for (Field field : fields) {
+	public List validate(Object object, String fileName, Object errorObj) throws Exception {
 
-            recursiveIntoSubObject(value, errorObj, cls, field);
+		if (null == object || null == errorObj) {
+			throw new RuntimeException("The input valdation object or register error object is null!");
+		}
 
-            Annotation[] annotations = field.getAnnotations();
-            if (annotations != null) {
+		CoreDccEngine coreDccEngine = new CoreDccEngine();
 
-                for (Annotation tag : annotations) {
-                    String fieldName = field.getName().substring(0, 1)
-                            .toUpperCase()
-                            + field.getName().substring(1);
-                    if (tag instanceof ValidationErrorXPath) {
-                        String name = SET + fieldName;
+		String id = CommonUtils.getClassSimpleName(object.getClass());
+		String[] errorStrs = coreDccEngine.validate(object, fileName, id, errorObj, engineMode);
 
-                        Method mtd = cls.getMethod(name, field.getType());
-                        mtd.invoke(errorObj, value);
+		return generateErrorObject(errorStrs, errorObj.getClass());
+	}
 
-                        // field.set(error, xPath);
-                    } else if (tag instanceof ValidationErrorMessage) {
-                        String setName = SET + fieldName;
-                        String getName = GET + fieldName;
+	public List validate(Object object, String fileName, String entityId, Object errorObj) throws Exception {
 
-                        Method getMethod = cls.getMethod(getName,
-                                new Class[] {});
-                        Object obj = getMethod.invoke(errorObj, null);
+		if (null == object || null == errorObj) {
+			throw new RuntimeException("The input valdation object or register error object is null!");
+		}
 
-                        if (null == obj || obj.toString() == null
-                                || obj.toString().trim().length() == 0
-                                || value.indexOf($JORDAN_XUE$) >= 0) {
+		CoreDccEngine coreDccEngine = new CoreDccEngine();
 
-                            if (value.indexOf($JORDAN_XUE$) >= 0) {
-                                value = value.substring(12);
-                            }
+		String[] errorStrs = coreDccEngine.validate(object, fileName, entityId, errorObj, engineMode);
 
-                            Method setMethod = cls.getMethod(setName, field
-                                    .getType());
-                            setMethod.invoke(errorObj, value);
+		return generateErrorObject(errorStrs, errorObj.getClass());
+	}
 
-                        }
-                    }
-                }
-            }
+	private List generateErrorObject(String[] errorStrs, Class class1) throws Exception {
 
-        }
-        return errorObj;
-    }
+		if (null == errorStrs || errorStrs.length == 0) {
+			return null;
+		}
 
-    private void recursiveIntoSubObject(String value, Object errorObj,
-            Class cls, Field field) throws NoSuchMethodException,
-            IllegalAccessException, InvocationTargetException, Exception {
+		List list = new ArrayList();
+		for (String err : errorStrs) {
 
-        if (!field.getType().isPrimitive()
-                && !field.getType().getName().startsWith(
-                        VRulesConstants.JAVA_OBJECTS)) {
+			int i = err.indexOf(VRulesConstants.$_ERROR_MESSAGE_FLAG);
 
-            String fieldName = field.getName();
-            String methodName = GET + fieldName.substring(0, 1).toUpperCase()
-                    + fieldName.substring(1);
+			String id = null;
+			if (i < 0) {
+				// continue;
+				err = $JORDAN_XUE$ + VRulesConstants.NILLABLE_ERROR + ": " + err;
+				id = currentErrorSequenceId;
+			} else {
+				id = err.substring(0, i);
+				currentErrorSequenceId = id;
+			}
 
-            Method m = cls.getMethod(methodName, null);
+			Object error = new Object();
+			Object error2 = ErrorObjectPoolManager.getError(id);
 
-            Object subObj = m.invoke(errorObj, null);
+			if (null != error2) {
+				error = BeanUtils.cloneBean(error2);
+			}
 
-            if (null == subObj) {
-                return;
-            }
+			if (null != error) {
 
-            if (subObj.getClass().isArray()) {
-                Object[] objs = (Object[]) subObj;
-                for (Object o : objs) {
-                    if (null != o) {
-                        fillValidationResultValue(value, o);
-                    }
-                }
+				String errorMsg = err;
+				if (errorMsg.indexOf($JORDAN_XUE$) < 0) {
+					errorMsg = err.substring(
+							err.indexOf(VRulesConstants.$_ERROR_MESSAGE_FLAG)
+									+ VRulesConstants.$_ERROR_MESSAGE_FLAG.length(),
+							err.indexOf(VRulesConstants.$_X_PATH));
+				}
+				String xPath = err.substring(err.indexOf(VRulesConstants.$_X_PATH) + VRulesConstants.$_X_PATH.length());
 
-            } else {
-                fillValidationResultValue(value, subObj);
-            }
-        }
-    }
+				error = fillValidationResultValue(errorMsg, error);
+				error = fillValidationResultValue(xPath, error);
 
-    private String[] parseErrorStrings(String[] strs) {
+				list.add(error);
+			}
+		}
 
-        if (null == strs) {
-            return null;
-        }
+		// printErrorInfo();
+		return list;
+	}
 
-        for (int i = 0; i < strs.length; i++) {
-            String str = strs[i];
+	private Object fillValidationResultValue(String value, Object errorObj) throws Exception {
 
-            if (str != null) {
-                int lastIndexOf = str
-                        .lastIndexOf(VRulesConstants.$_ERROR_MESSAGE_FLAG);
+		Class cls = errorObj.getClass();
 
-                if (lastIndexOf >= 0) {
-                    str = str.substring(lastIndexOf + 17);
-                }
-            }
+		Field[] fields = ObjectReflector.getAllJavaBeanFields(cls);
 
-            strs[i] = str;
-        }
+		for (Field field : fields) {
 
-        return strs;
-    }
+			recursiveIntoSubObject(value, errorObj, cls, field);
 
-    public String[] validate(Map<String, Object> objMap, String fileName)
-            throws Exception {
+			Annotation[] annotations = field.getAnnotations();
+			if (annotations != null) {
 
-        if (null == objMap) {
-            throw new RuntimeException("The input valdation object is null!");
-        }
-        
-        CoreDccEngine coreDccEngine = new CoreDccEngine();
-        return parseErrorStrings(coreDccEngine.validate(objMap, fileName, null,null,engineMode));
-    }
+				for (Annotation tag : annotations) {
+					String fieldName = field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
+					if (tag instanceof ValidationErrorXPath) {
+						String name = SET + fieldName;
 
-    public List validate(Map<String, Object> objMap, String fileName, Object errorObj) throws Exception {
+						Method mtd = cls.getMethod(name, field.getType());
+						mtd.invoke(errorObj, value);
 
-        if (null == objMap || null == errorObj) {
-            throw new RuntimeException(
-                    "The input valdation object or register error object is null!");
-        }
+						// field.set(error, xPath);
+					} else if (tag instanceof ValidationErrorMessage) {
+						String setName = SET + fieldName;
+						String getName = GET + fieldName;
 
-        CoreDccEngine coreDccEngine = new CoreDccEngine();
+						Method getMethod = cls.getMethod(getName, new Class[] {});
+						Object obj = getMethod.invoke(errorObj, null);
 
-        String[] errorStrs = coreDccEngine.validate(objMap, fileName, null,errorObj,engineMode);
+						if (null == obj || obj.toString() == null || obj.toString().trim().length() == 0
+								|| value.indexOf($JORDAN_XUE$) >= 0) {
 
-        return generateErrorObject(errorStrs, errorObj.getClass());
-    }
+							if (value.indexOf($JORDAN_XUE$) >= 0) {
+								value = value.substring(12);
+							}
+
+							Method setMethod = cls.getMethod(setName, field.getType());
+							setMethod.invoke(errorObj, value);
+
+						}
+					}
+				}
+			}
+
+		}
+		return errorObj;
+	}
+
+	private void recursiveIntoSubObject(String value, Object errorObj, Class cls, Field field)
+			throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, Exception {
+
+		if (!field.getType().isPrimitive() && !field.getType().getName().startsWith(VRulesConstants.JAVA_OBJECTS)) {
+
+			String fieldName = field.getName();
+			String methodName = GET + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+
+			Method m = cls.getMethod(methodName, null);
+
+			Object subObj = m.invoke(errorObj, null);
+
+			if (null == subObj) {
+				return;
+			}
+
+			if (subObj.getClass().isArray()) {
+				Object[] objs = (Object[]) subObj;
+				for (Object o : objs) {
+					if (null != o) {
+						fillValidationResultValue(value, o);
+					}
+				}
+
+			} else {
+				fillValidationResultValue(value, subObj);
+			}
+		}
+	}
+
+	private String[] parseErrorStrings(String[] strs) {
+
+		if (null == strs) {
+			return null;
+		}
+
+		for (int i = 0; i < strs.length; i++) {
+			String str = strs[i];
+
+			if (str != null) {
+				int lastIndexOf = str.lastIndexOf(VRulesConstants.$_ERROR_MESSAGE_FLAG);
+
+				if (lastIndexOf >= 0) {
+					str = str.substring(lastIndexOf + VRulesConstants.$_ERROR_MESSAGE_FLAG.length());
+				}
+			}
+
+			strs[i] = str;
+		}
+
+		return strs;
+	}
+
+	public String[] validate(Map<String, Object> objMap, String fileName) throws Exception {
+
+		if (null == objMap) {
+			throw new RuntimeException("The input valdation object is null!");
+		}
+
+		CoreDccEngine coreDccEngine = new CoreDccEngine();
+		return parseErrorStrings(coreDccEngine.validate(objMap, fileName, null, null, engineMode));
+	}
+
+	public List validate(Map<String, Object> objMap, String fileName, Object errorObj) throws Exception {
+
+		if (null == objMap || null == errorObj) {
+			throw new RuntimeException("The input valdation object or register error object is null!");
+		}
+
+		CoreDccEngine coreDccEngine = new CoreDccEngine();
+
+		String[] errorStrs = coreDccEngine.validate(objMap, fileName, null, errorObj, engineMode);
+
+		return generateErrorObject(errorStrs, errorObj.getClass());
+	}
 }

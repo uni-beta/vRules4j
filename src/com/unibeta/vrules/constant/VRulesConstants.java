@@ -25,7 +25,7 @@ import java.lang.management.ManagementFactory;
  * @author Jordan.Xue
  */
 public class VRulesConstants {
-	public static final String $_ERROR_MESSAGE_FLAG = "$[errorMessage]:=";
+	public static final String $_ERROR_MESSAGE_FLAG = "$[message]:=";
 	public static final String $_X_PATH = "${xPath}:=";
 	public static final String JAVA_OBJECTS = "java.";
 	public static final String NILLABLE_ERROR = "[NillableError]";
