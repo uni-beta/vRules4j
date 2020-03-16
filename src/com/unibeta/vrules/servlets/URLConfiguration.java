@@ -68,6 +68,7 @@ public class URLConfiguration {
 	}
 
 	public static String getXclasspath() {
+		return xclasspath;
 	}
 
 	public static void setXclasspath(String xclasspath) {
