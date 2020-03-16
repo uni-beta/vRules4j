@@ -640,6 +640,10 @@ public class CommonUtils {
 
 		File srcFile = new File(src);
 		File destFile = new File(dest);
+		
+		if(!srcFile.exists()) {
+			throw new Exception(src + " is not exist");
+		}
 
 		if (srcFile.isFile()) {
 			if (!destFile.getParentFile().exists()) {

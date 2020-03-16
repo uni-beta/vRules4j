@@ -373,7 +373,7 @@ public class Java2vRules {
      * class to vRuels.
      * 
      * @param obj
-     *            the array object to be degisted.
+     *            the array object to be digested.
      * @param filePath
      *            file path to be located
      * @throws Exception

@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 
 import org.apache.log4j.Logger;
 
@@ -51,6 +52,7 @@ public class URLConfiguration {
 	private static String classpath;
 	private static String realPath = null;
 	private static URL[] classpathURLs = null;
+	private static String xclasspath = null;
 
 	private static final String ZIP_SUFFIX = ".zip";
 	private static final String JAR_SUFFIX = ".jar";
@@ -63,6 +65,13 @@ public class URLConfiguration {
 
 	static {
 
+	}
+
+	public static String getXclasspath() {
+	}
+
+	public static void setXclasspath(String xclasspath) {
+		URLConfiguration.xclasspath = xclasspath;
 	}
 
 	private static URL[] generateUrlsByClasspath(String classpath) {
@@ -302,6 +311,7 @@ public class URLConfiguration {
 			resolveClasspath();
 
 			URLConfiguration.setClasspathURLs(generateUrlsByClasspath(URLConfiguration.getClasspath()));
+			log.debug("vRules4j classpath:" + URLConfiguration.getClasspath());
 		}
 	}
 
@@ -320,11 +330,7 @@ public class URLConfiguration {
 			}
 		}
 
-		if (CommonUtils.isNullOrEmpty(sb.toString())) {
-			URLConfiguration.setClasspath(null);
-		} else {
-			URLConfiguration.setClasspath(sb.toString());
-		}
+		URLConfiguration.setClasspath(sb.toString());
 
 	}
 
@@ -332,40 +338,45 @@ public class URLConfiguration {
 		StringBuffer sb = new StringBuffer();
 		try {
 			JarFile jar = new JarFile(p);
-			Attributes mfs = jar.getManifest().getMainAttributes();
+			Manifest manifest = jar.getManifest();
 
 			File srcFile = new File(p);
 
-			if (mfs != null) {
+			if (manifest != null && manifest.getMainAttributes() != null) {
+				Attributes mfs = manifest.getMainAttributes();
+
 				String bootClassses = mfs.getValue("Spring-Boot-Classes");
 				String bootLib = mfs.getValue("Spring-Boot-Lib");
 
 				if (bootClassses == null || bootLib == null) {
-					return "";
+					sb.append(p + File.pathSeparator);
 				} else {
 					log.info("springboot jar was detected from " + p);
 					String dest = URLConfiguration.getRealPath();
 
 					dest = p.substring(0, p.length() - ".jar".length());
-					
-//					if (CommonUtils.isNullOrEmpty(dest)) {
-//						dest = p.substring(0, p.length() - ".jar".length());
-//					} else {
-//						dest = dest + "/"
-//								+ srcFile.getName().substring(0, srcFile.getName().length() - ".jar".length());
-//					}
+
+					// if (CommonUtils.isNullOrEmpty(dest)) {
+					// dest = p.substring(0, p.length() - ".jar".length());
+					// } else {
+					// dest = dest + "/"
+					// + srcFile.getName().substring(0, srcFile.getName().length() -
+					// ".jar".length());
+					// }
 
 					ZipUitls.deleteFiles(dest);
 					ZipUitls.unzip(srcFile, new File(dest));
 					log.info("springboot jar was resolved success from " + p);
 
 					sb.append(dest + File.separator + bootClassses + File.pathSeparator);
-					
+
 					String libs = dest + File.separator + bootLib;
-					sb.append(findAllLibraries(libs) );
-					
+					sb.append(findAllLibraries(libs));
+
 					log.info("revolved springboot classpath is:" + sb.toString());
 				}
+			} else {
+				sb.append(p + File.pathSeparator);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -396,6 +407,7 @@ public class URLConfiguration {
 						+ File.pathSeparator + s + File.pathSeparator);
 			}
 		}
+		xclasspath = paths;
 	}
 
 	public static String getLocalClassPaths() {
