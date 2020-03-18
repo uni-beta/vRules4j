@@ -24,7 +24,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,6 +103,17 @@ public class CoreDccEngine {
             }
         } catch (ClassNotFoundException e) {
             ConfigurationProxy.getModifiedTimeTable().put(
+                    ConfigurationProxy.buildKeyValue(fileName, decisionClass),
+                    new Long(System.currentTimeMillis()));
+
+            log.info("begin re-try interprete and invoke " + fileName + " ...");
+
+            errors = validate(object, fileName, entityId, decisionObject,
+                    vrulesMode);
+            log.info(fileName
+                    + " is interpreted and invoked successfully in second time.");
+        }catch(NoClassDefFoundError e) {
+        	ConfigurationProxy.getModifiedTimeTable().put(
                     ConfigurationProxy.buildKeyValue(fileName, decisionClass),
                     new Long(System.currentTimeMillis()));
 

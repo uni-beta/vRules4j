@@ -47,7 +47,7 @@ import com.unibeta.vrules.utils.CommonUtils;
 public class InterpreterUtils {
 
 	private static final String STRING_FORMAT = "@StRiNg-FoRmAt@";
-	private static final String REGEX_EVAL_EXPRESSION = "\\{[\\s\\S]*\\}";
+	private static final String REGEX_EVAL_EXPRESSION = "#\\{[\\s\\S]*\\}|$\\{[\\s\\S]*\\}";
 	private static Logger log = Logger.getLogger(InterpreterUtils.class);
 	private static Pattern evalPattern = Pattern.compile(REGEX_EVAL_EXPRESSION, Pattern.DOTALL);
 	private static Boolean $hasBsh = null;
@@ -64,7 +64,7 @@ public class InterpreterUtils {
 	public static Object getValueFromCollectionByContext(Map<String, Object> dataMap, String className, String name)
 			throws Exception {
 
-		if (dataMap.get(className) != null) {
+		if (dataMap.get(name) != null) {
 			return dataMap.get(name);
 		} else {
 			return getValueFromCollectionByClassName(dataMap.values(), className);

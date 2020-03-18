@@ -380,8 +380,7 @@ public class URLConfiguration {
 				sb.append(p + File.pathSeparator);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn(e.getMessage());
 		}
 
 		return sb.toString();
