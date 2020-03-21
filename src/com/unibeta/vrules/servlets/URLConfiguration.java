@@ -30,6 +30,7 @@ import java.util.jar.Manifest;
 
 import org.apache.log4j.Logger;
 
+import com.unibeta.vrules.tools.CommonSyntaxs;
 import com.unibeta.vrules.utils.CommonUtils;
 import com.unibeta.vrules.utils.ZipUitls;
 
@@ -388,17 +389,7 @@ public class URLConfiguration {
 
 	private static void setExtraClasspath() {
 
-		String paths = System.getProperty("vRules4j.classpath");
-		if (CommonUtils.isNullOrEmpty(paths)) {
-			paths = System.getProperty("vrules4j.classpath");
-		}
-		if (CommonUtils.isNullOrEmpty(paths)) {
-			paths = System.getProperty("vrules.classpath");
-		}
-
-		if (CommonUtils.isNullOrEmpty(paths)) {
-			paths = System.getenv("VRULES_CLASSPATH");
-		}
+		String paths =CommonSyntaxs.getXclasspath();
 
 		if (!CommonUtils.isNullOrEmpty(paths)) {
 			String[] ps = paths.split(",");
@@ -407,6 +398,7 @@ public class URLConfiguration {
 						+ File.pathSeparator + s + File.pathSeparator);
 			}
 		}
+		
 		xclasspath = paths;
 	}
 
