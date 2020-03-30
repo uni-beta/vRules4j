@@ -1000,8 +1000,7 @@ public class RulesParser {
 		}
 
 		if (rule.getId().length() == 0) {
-			logger.warn(
-					"Parsing the rules configuration file failed. The arrtibute 'id' is mandatory for rule element!");
+			logger.debug("a rule without specified 'id' will be ignored.");
 			return null;
 		}
 
@@ -1066,7 +1065,7 @@ public class RulesParser {
 				processPredefinedDecisionConstant(unmarshalToObject, decisionConstantDefinitionMap);
 				ErrorObjectPoolManager.addError(sequenceId, unmarshalToObject);
 			} else {
-				logger.warn("Decision object was not defined for rule[id=" + rule.getId()
+				logger.debug("Decision object was not defined for rule[id=" + rule.getId()
 						+ "], the validation result might be ignored.");
 			}
 		}

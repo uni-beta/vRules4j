@@ -375,7 +375,7 @@ public class URLConfiguration {
 					String libs = dest + File.separator + bootLib;
 					sb.append(findAllLibraries(libs));
 
-					log.info("revolved springboot classpath is:" + sb.toString());
+					log.debug("revolved springboot classpath is:" + sb.toString());
 				}
 			} else {
 				sb.append(p + File.pathSeparator);

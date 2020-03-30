@@ -33,6 +33,7 @@ import org.apache.log4j.Logger;
 
 import com.unibeta.vrules.constant.VRulesConstants;
 import com.unibeta.vrules.parsers.ConfigurationProxy;
+import com.unibeta.vrules.tools.CommonSyntaxs;
 import com.unibeta.vrules.utils.CommonUtils;
 
 /**
@@ -52,6 +53,7 @@ public class ValidationClassLoader extends URLClassLoader {
 
     private static Map instancesPool = Collections
             .synchronizedMap(new HashMap());
+    private static long timestamp = System.currentTimeMillis();
 
     public ValidationClassLoader(String fileName, Class decisionClass) {
 
@@ -82,8 +84,7 @@ public class ValidationClassLoader extends URLClassLoader {
             instance = obj;
 
             synchronized (classRUIName) {
-                instancesPool.put(ConfigurationProxy.buildKeyValue(
-                        classRUIName, decisionClass), instance);
+                instancesPool.put(getKey(classRUIName), instance);
             }
         } catch (ClassNotFoundException e) {
             log.warn(e.getMessage() + ", try to re-compile target source '"
@@ -97,6 +98,11 @@ public class ValidationClassLoader extends URLClassLoader {
 
         return instance;
     }
+
+	private String getKey(String classRUIName) {
+		return Thread.currentThread().getId()+"@"+ConfigurationProxy.buildKeyValue(
+		        classRUIName, decisionClass);
+	}
 
     /**
      * Generates the URLs by given vRuels configuration file name.
@@ -139,11 +145,14 @@ public class ValidationClassLoader extends URLClassLoader {
 
         String className = buildClassPath();
 
-        instance = instancesPool.get(ConfigurationProxy.buildKeyValue(
-                className, decisionClass));
+        instance = instancesPool.get(getKey(className));
 
         if (null == instance) {
             instance = newValidationInstance();
+        }
+        
+        if((System.currentTimeMillis() - timestamp)/1000 > CommonSyntaxs.getRuleFileModifiedBeatsCheckInterval()*1000) {
+        	instancesPool.clear();
         }
 
         return instance;

@@ -106,8 +106,10 @@ public class CoreDccEngine {
                     ConfigurationProxy.buildKeyValue(fileName, decisionClass),
                     new Long(System.currentTimeMillis()));
 
+            log.warn(e.getMessage());
             log.info("begin re-try interprete and invoke " + fileName + " ...");
-
+            Thread.sleep(1000);
+            
             errors = validate(object, fileName, entityId, decisionObject,
                     vrulesMode);
             log.info(fileName
@@ -117,12 +119,16 @@ public class CoreDccEngine {
                     ConfigurationProxy.buildKeyValue(fileName, decisionClass),
                     new Long(System.currentTimeMillis()));
 
+        	log.warn(e.getMessage());
             log.info("begin re-try interprete and invoke " + fileName + " ...");
-
+            Thread.sleep(1000);
+            
             errors = validate(object, fileName, entityId, decisionObject,
                     vrulesMode);
             log.info(fileName
                     + " is interpreted and invoked successfully in second time.");
+        }catch (Exception e) {
+        	throw e;
         }
 
         if (errors != null && errors.length > 0) {

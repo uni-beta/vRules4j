@@ -313,11 +313,11 @@ public class InterpreterUtils {
 			return;
 		}
 
-		try {
-			bsh.unset(name);
-		} catch (EvalError e) {
-			log.error("BeanShell unset variable error caused by " + e.getMessage(), e);
-		}
+//		try {
+//			bsh.unset(name);
+//		} catch (EvalError e) {
+//			log.error("BeanShell unset variable error caused by " + e.getMessage(), e);
+//		}
 	}
 
 	public static boolean isNumericType(String className) {
