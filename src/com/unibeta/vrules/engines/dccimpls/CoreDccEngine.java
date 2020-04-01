@@ -33,6 +33,7 @@ import org.apache.log4j.Logger;
 import com.unibeta.vrules.base.GlobalConfig;
 import com.unibeta.vrules.engines.dccimpls.rules.RulesValidation;
 import com.unibeta.vrules.parsers.ConfigurationProxy;
+import com.unibeta.vrules.tools.CommonSyntaxs;
 import com.unibeta.vrules.tools.Java2vRules;
 import com.unibeta.vrules.utils.CommonUtils;
 
@@ -44,276 +45,243 @@ import com.unibeta.vrules.utils.CommonUtils;
  */
 public class CoreDccEngine {
 
-    static Logger log = Logger.getLogger(CoreDccEngine.class);
-    static Map<String, byte[]> lockMap = new HashMap<String, byte[]>();
+	static Logger log = Logger.getLogger(CoreDccEngine.class);
+	static Map<String, byte[]> lockMap = new HashMap<String, byte[]>();
+	String lockedFileName = "";
 
-    /**
-     * Validates the specified object by <code>entityId</code>.
-     * 
-     * @param object
-     * @param fileName
-     *            the full path name of rule configuration located.
-     * @param entityId
-     *            the unique id the every engity or element.
-     * @return null if validate passed, otherwise return error messages.
-     */
-    public String[] validate(Object object, String fileName, String entityId,
-            Object decisionObject, String vrulesMode) throws Exception {
+	/**
+	 * Validates the specified object by <code>entityId</code>.
+	 * 
+	 * @param object
+	 * @param fileName
+	 *            the full path name of rule configuration located.
+	 * @param entityId
+	 *            the unique id the every entity or element.
+	 * @return null if validate passed, otherwise return error messages.
+	 */
+	public String[] validate(Object object, String fileName, String entityId, Object decisionObject, String vrulesMode)
+			throws Exception {
 
-        String[] errors = null;
-        Class decisionClass = null;
+		String[] errors = null;
+		Class decisionClass = null;
 
-        if (null != decisionObject) {
-            decisionClass = decisionObject.getClass();
-        }
+		if (null != decisionObject) {
+			decisionClass = decisionObject.getClass();
+		}
 
-        fileName = fileName.replace("\\", "/").replaceAll("/+", "/");
-        File file = new File(fileName);
+		fileName = fileName.replace("\\", "/").replaceAll("/+", "/");
+		File file = new File(fileName);
+		this.lockedFileName = fileName;
 
-        if (!file.isAbsolute()) {
-            String newFileName = ConfigurationProxy.getLocalClassPath()
-                    + File.separator + "vRules4j" + File.separator + fileName;
-            newFileName = newFileName.replace("\\", "/").replaceAll("/+", "/");
+		if (!file.isAbsolute()) {
+			String newFileName = ConfigurationProxy.getLocalClassPath() + File.separator + "vRules4j" + File.separator
+					+ fileName;
+			newFileName = newFileName.replace("\\", "/").replaceAll("/+", "/");
 
-            File newFile = duplicateRuleFilesFromClassPath(fileName,
-                    decisionClass, newFileName);
+			File newFile = duplicateRuleFilesFromClassPath(fileName, decisionClass, newFileName);
 
-            fileName = newFileName;
-            file = newFile;
-        }
+			fileName = newFileName;
+			file = newFile;
+		}
 
-        if (!file.exists()) {
-            synchronized (getLock(fileName)) {
-                digestObjectsToRules(object, fileName, decisionObject);
-            }
-        }
+		if (!file.exists()) {
+			synchronized (this.lockedFileName) {
+				if (!file.exists()) {
+					digestObjectsToRules(object, fileName, decisionObject);
+				}
+			}
+		}
 
-        try {
-            if (ConfigurationProxy.isModified(fileName, decisionClass)) {
+		try {
+			if (ConfigurationProxy.isModified(fileName, decisionClass)) {
 
-                synchronized (getLock(fileName)) {
-                    interprete(fileName, vrulesMode, decisionClass);
-                }
+				synchronized (this.lockedFileName) {
+					if (ConfigurationProxy.isModified(fileName, decisionClass)) {
+						interprete(fileName, vrulesMode, decisionClass);
+						errors = invokeValidate(object, fileName, entityId, true, decisionClass);
+					}
+				}
 
-                errors = invokeValidate(object, fileName, entityId, true,
-                        decisionClass);
-            } else {
-                errors = invokeValidate(object, fileName, entityId, false,
-                        decisionClass);
-            }
-        } catch (ClassNotFoundException e) {
-            ConfigurationProxy.getModifiedTimeTable().put(
-                    ConfigurationProxy.buildKeyValue(fileName, decisionClass),
-                    new Long(System.currentTimeMillis()));
+			} else {
+				errors = invokeValidate(object, fileName, entityId, false, decisionClass);
+			}
+		} catch (ClassNotFoundException e) {
+			ConfigurationProxy.getModifiedTimeTable().put(ConfigurationProxy.buildKeyValue(fileName, decisionClass),
+					new Long(System.currentTimeMillis()));
 
-            log.warn(e.getMessage());
-            log.info("begin re-try interprete and invoke " + fileName + " ...");
-            Thread.sleep(1000);
-            
-            errors = validate(object, fileName, entityId, decisionObject,
-                    vrulesMode);
-            log.info(fileName
-                    + " is interpreted and invoked successfully in second time.");
-        }catch(NoClassDefFoundError e) {
-        	ConfigurationProxy.getModifiedTimeTable().put(
-                    ConfigurationProxy.buildKeyValue(fileName, decisionClass),
-                    new Long(System.currentTimeMillis()));
+			log.warn(e.getMessage());
+			log.info("begin re-try interprete and invoke " + fileName + " ...");
 
-        	log.warn(e.getMessage());
-            log.info("begin re-try interprete and invoke " + fileName + " ...");
-            Thread.sleep(1000);
-            
-            errors = validate(object, fileName, entityId, decisionObject,
-                    vrulesMode);
-            log.info(fileName
-                    + " is interpreted and invoked successfully in second time.");
-        }catch (Exception e) {
-        	throw e;
-        }
+			long interval = CommonSyntaxs.getRuleFileModifiedBeatsCheckInterval();
+			CommonSyntaxs.setRuleFileModifiedBeatsCheckInterval(0L);
+			errors = validate(object, fileName, entityId, decisionObject, vrulesMode);
+			CommonSyntaxs.setRuleFileModifiedBeatsCheckInterval(interval);
 
-        if (errors != null && errors.length > 0) {
-            return errors;
-        } else {
-            return null;
-        }
-    }
+			log.info(fileName + " is interpreted and invoked successfully in second time.");
+		}
 
-    private byte[] getLock(String fileName) {
+		if (errors != null && errors.length > 0) {
+			return errors;
+		} else {
+			return null;
+		}
+	}
 
-        if (lockMap.get(fileName) == null) {
-            lockMap.put(fileName, fileName.getBytes());
-        }
+	private byte[] getLock(String fileName, Class decisionClass) {
 
-        return lockMap.get(fileName);
-    }
+		String key = fileName + "@" + decisionClass != null ? decisionClass.getCanonicalName() : "";
 
-    private File duplicateRuleFilesFromClassPath(String fileName,
-            Class decisionClass, String newFileName) throws Exception {
+		if (lockMap.get(key) == null) {
+			lockMap.put(key, key.getBytes());
+		}
 
-        File newFile = new File(newFileName);
-        if (!newFile.getParentFile().exists()) {
-            newFile.getParentFile().mkdirs();
-        }
+		return lockMap.get(key);
+	}
 
-        URL srcUrl = Thread.currentThread().getContextClassLoader()
-                .getResource(fileName);
+	private File duplicateRuleFilesFromClassPath(String fileName, Class decisionClass, String newFileName)
+			throws Exception {
 
-        if (null != srcUrl
-                && (!newFile.exists() || (ConfigurationProxy.isModified(
-                        fileName, decisionClass)))) {
+		File newFile = new File(newFileName);
+		if (!newFile.getParentFile().exists()) {
+			newFile.getParentFile().mkdirs();
+		}
 
-            synchronized (getLock(fileName)) {
-                copyFilesToLocal(fileName, newFileName);
-                ConfigurationProxy.updateLastModifiedTime(fileName,
-                        decisionClass);
-            }
-        }
-        return newFile;
-    }
+		URL srcUrl = Thread.currentThread().getContextClassLoader().getResource(fileName);
 
-    private void interprete(String fileName, String vrulesMode,
-            Class decisionClass) throws Exception {
+		if (null != srcUrl && (!newFile.exists() || (ConfigurationProxy.isModified(fileName, decisionClass)))) {
 
-        if (!ConfigurationProxy.isModified(fileName, decisionClass)) {
-            return;
-        }
+			synchronized (getLock(fileName, decisionClass)) {
+				copyFilesToLocal(fileName, newFileName);
+				ConfigurationProxy.updateLastModifiedTime(fileName, decisionClass);
+			}
+		}
+		return newFile;
+	}
 
-        if (CommonUtils.isNullOrEmpty(vrulesMode)) {
-            vrulesMode = ConfigurationProxy
-                    .getVRuleSuiteInstance(fileName, decisionClass)
-                    .getGlobalConfig().isDecisionMode() ? RulesInterpreter.VRULES_ENGINE_MODE_DECISION
-                    : RulesInterpreter.VRULES_ENGINE_MODE_VALIDATION;
-        }
+	private void interprete(String fileName, String vrulesMode, Class decisionClass) throws Exception {
 
-        RulesInterpreter dynamicRulesInterpreter = RulesInterpreterFactory
-                .getInstance(vrulesMode);
+		if (!ConfigurationProxy.isModified(fileName, decisionClass)) {
+			return;
+		}
 
-        String javaFile = dynamicRulesInterpreter.interprete(fileName,
-                decisionClass);
-        String result = DynamicCompiler.compile(javaFile);
+		if (CommonUtils.isNullOrEmpty(vrulesMode)) {
+			vrulesMode = ConfigurationProxy.getVRuleSuiteInstance(fileName, decisionClass).getGlobalConfig()
+					.isDecisionMode() ? RulesInterpreter.VRULES_ENGINE_MODE_DECISION
+							: RulesInterpreter.VRULES_ENGINE_MODE_VALIDATION;
+		}
 
-        if (result != null) {
+		RulesInterpreter dynamicRulesInterpreter = RulesInterpreterFactory.getInstance(vrulesMode);
 
-            ConfigurationProxy.getModifiedTimeTable().put(
-                    ConfigurationProxy.buildKeyValue(fileName, decisionClass),
-                    new Long(System.currentTimeMillis()));
+		String javaFile = dynamicRulesInterpreter.interprete(fileName, decisionClass);
+		String result = DynamicCompiler.compile(javaFile);
 
-            throw new Exception(
-                    "vRules4j dynamic compiling failed caused by the incorrect configuration, please check the rules configuration file.\nThe invalid file is located in ["
-                            + fileName
-                            + "], compiling fatal errors were found below:\n"
-                            + result);
-        } else {
-            File srcFile = new File(javaFile);
-            srcFile.delete();
+		if (result != null) {
 
-            ConfigurationProxy.updateLastModifiedTime(fileName, decisionClass);
-        }
-    }
+			ConfigurationProxy.getModifiedTimeTable().put(ConfigurationProxy.buildKeyValue(fileName, decisionClass),
+					new Long(System.currentTimeMillis()));
 
-    private void digestObjectsToRules(Object object, String fileName,
-            Object decisionObject) throws Exception {
+			throw new Exception(
+					"vRules4j dynamic compiling failed caused by the incorrect configuration, please check the rules configuration file.\nThe invalid file is located in ["
+							+ fileName + "], compiling fatal errors were found below:\n" + result);
+		} else {
+			File srcFile = new File(javaFile);
+			srcFile.delete();
 
-        if (object instanceof Map) {
-            Map map = (Map) object;
+			ConfigurationProxy.updateLastModifiedTime(fileName, decisionClass);
+		}
+	}
 
-            Java2vRules.digest(map, fileName, decisionObject);
-        } else if (object.getClass().isArray()) {
-            Object[] objs = (Object[]) object;
-            Java2vRules.digest(objs, fileName, decisionObject);
-        } else {
-            Java2vRules.digest(object.getClass(), fileName, decisionObject);
-        }
+	private void digestObjectsToRules(Object object, String fileName, Object decisionObject) throws Exception {
 
-        log.info("vRules4j-Digester auto generated rule-template file path is: "
-                + fileName);
-    }
+		if (object instanceof Map) {
+			Map map = (Map) object;
 
-    private boolean copyFilesToLocal(String fileName, String newFileName)
-            throws Exception {
+			Java2vRules.digest(map, fileName, decisionObject);
+		} else if (object.getClass().isArray()) {
+			Object[] objs = (Object[]) object;
+			Java2vRules.digest(objs, fileName, decisionObject);
+		} else {
+			Java2vRules.digest(object.getClass(), fileName, decisionObject);
+		}
 
-        boolean result = false;
-        InputStream is = Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream(fileName);
+		log.info("vRules4j-Digester auto generated rule-template file path is: " + fileName);
+	}
 
-        if (is != null) {
-            FileOutputStream fos = new FileOutputStream(newFileName);
-            byte[] bytes = new byte[is.available()];
+	private boolean copyFilesToLocal(String fileName, String newFileName) throws Exception {
 
-            is.read(bytes);
-            fos.write(bytes);
+		boolean result = false;
+		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
 
-            is.close();
-            fos.close();
-            result = true;
+		if (is != null) {
+			FileOutputStream fos = new FileOutputStream(newFileName);
+			byte[] bytes = new byte[is.available()];
 
-            copyIncludedFilesToLocal(fileName, new FileInputStream(newFileName));
-        } else {
-            log.warn("resouce[" + fileName
-                    + "] can not be loaded from current classpath context.");
-            result = false;
-        }
+			is.read(bytes);
+			fos.write(bytes);
 
-        return result;
-    }
+			is.close();
+			fos.close();
+			result = true;
 
-    private void copyIncludedFilesToLocal(String currnetFilePath,
-            InputStream inputStream) throws Exception {
+			copyIncludedFilesToLocal(fileName, new FileInputStream(newFileName));
+		} else {
+			log.warn("resouce[" + fileName + "] can not be loaded from current classpath context.");
+			result = false;
+		}
 
-        GlobalConfig gc = ConfigurationProxy.getGlobalConfig(inputStream);
-        String[] includes = CommonUtils.fetchIncludesFileNames(
-                gc.getIncludes(), currnetFilePath);
+		return result;
+	}
 
-        for (String s : includes) {
+	private void copyIncludedFilesToLocal(String currnetFilePath, InputStream inputStream) throws Exception {
 
-            String nf = ConfigurationProxy.getLocalClassPath() + File.separator
-                    + "vRules4j" + File.separator + s;
+		GlobalConfig gc = ConfigurationProxy.getGlobalConfig(inputStream);
+		String[] includes = CommonUtils.fetchIncludesFileNames(gc.getIncludes(), currnetFilePath);
 
-            File newFile = new File(nf);
-            if (!newFile.getParentFile().exists()) {
-                newFile.getParentFile().mkdirs();
-            }
+		for (String s : includes) {
 
-            String canonicalPath = new File(s).getPath().replace("\\", "/")
-                    .replaceAll("/+", "/");
-            copyFilesToLocal(canonicalPath, nf);
-        }
-    }
+			String nf = ConfigurationProxy.getLocalClassPath() + File.separator + "vRules4j" + File.separator + s;
 
-    private static String[] invokeValidate(Object object, String fileName,
-            String entityId, boolean isModified, Class decisionClass)
-            throws Exception {
+			File newFile = new File(nf);
+			if (!newFile.getParentFile().exists()) {
+				newFile.getParentFile().mkdirs();
+			}
 
-        List<String> ruleIdList = null;
-        RulesValidation rulesValidation = null;
+			String canonicalPath = new File(s).getPath().replace("\\", "/").replaceAll("/+", "/");
+			copyFilesToLocal(canonicalPath, nf);
+		}
+	}
 
-        ValidationClassLoader validationClassLoader = new ValidationClassLoader(
-                fileName, decisionClass);
-        Object validator = null;
+	private static String[] invokeValidate(Object object, String fileName, String entityId, boolean isModified,
+			Class decisionClass) throws Exception {
 
-        if (!isModified) {
-            validator = validationClassLoader.getValidationInstance();
-        } else {
-            validator = validationClassLoader.newValidationInstance();
-        }
+		List<String> ruleIdList = null;
+		RulesValidation rulesValidation = null;
 
-        String[] errors = null;
+		ValidationClassLoader validationClassLoader = new ValidationClassLoader(fileName, decisionClass);
+		Object validator = null;
 
-        if (validator instanceof RulesValidation) {
-            rulesValidation = (RulesValidation) validator;
-        }
+		if (!isModified) {
+			validator = validationClassLoader.getValidationInstance();
+		} else {
+			validator = validationClassLoader.newValidationInstance();
+		}
 
-        if (object instanceof Map) {
+		String[] errors = null;
 
-            Map<String, List<String>> map = ConfigurationProxy.getRulesetMap(
-                    fileName, decisionClass);
-            errors = rulesValidation.validate((Map) object, map);
-        } else {
-            errors = rulesValidation.validate(object, entityId,
-                    ConfigurationProxy.getRulesetMap(fileName, decisionClass));
-        }
+		if (validator instanceof RulesValidation) {
+			rulesValidation = (RulesValidation) validator;
+		}
 
-        return errors;
-    }
+		if (object instanceof Map) {
+
+			Map<String, List<String>> map = ConfigurationProxy.getRulesetMap(fileName, decisionClass);
+			errors = rulesValidation.validate((Map) object, map);
+		} else {
+			errors = rulesValidation.validate(object, entityId,
+					ConfigurationProxy.getRulesetMap(fileName, decisionClass));
+		}
+
+		return errors;
+	}
 
 }

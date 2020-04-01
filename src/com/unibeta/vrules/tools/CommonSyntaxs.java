@@ -58,7 +58,7 @@ public class CommonSyntaxs {
 	}
 
 	public static Boolean getEnablePrint() {
-		return enablePrint;
+		return isEnablePrint();
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class CommonSyntaxs {
 			if (!CommonUtils.isNullOrEmpty(configuredBeatsInterval) && isNumeric(configuredBeatsInterval)) {
 				ruleFileModifiedBeatsCheckInterval = Double.valueOf(configuredBeatsInterval).longValue();
 			} else {
-				ruleFileModifiedBeatsCheckInterval = 10L;
+				ruleFileModifiedBeatsCheckInterval = 0L;
 			}
 		}
 
