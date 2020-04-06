@@ -30,12 +30,11 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
-import bsh.EvalError;
-import bsh.Interpreter;
-
-import com.unibeta.vrules.base.VRules4jContext;
 import com.unibeta.vrules.parsers.ObjectSerializer;
 import com.unibeta.vrules.utils.CommonUtils;
+
+import bsh.EvalError;
+import bsh.Interpreter;
 
 /**
  * The common util functions for Interpreter.
@@ -47,11 +46,23 @@ import com.unibeta.vrules.utils.CommonUtils;
 public class InterpreterUtils {
 
 	private static final String STRING_FORMAT = "@StRiNg-FoRmAt@";
-	private static final String REGEX_EVAL_EXPRESSION = "#\\{[\\s\\S]*\\}|$\\{[\\s\\S]*\\}";
+	private static final String REGEX_EVAL_EXPRESSION = "\\{[\\s\\S]*\\}";
 	private static Logger log = Logger.getLogger(InterpreterUtils.class);
 	private static Pattern evalPattern = Pattern.compile(REGEX_EVAL_EXPRESSION, Pattern.DOTALL);
 	private static Boolean $hasBsh = null;
+	private static ThreadLocal<Interpreter> bshThreadLocal = new ThreadLocal<Interpreter>();
 
+	static public Interpreter getBsh() {
+		Interpreter bsh = bshThreadLocal.get();
+		
+		if(null == bsh) {
+			bsh = new Interpreter();
+			bshThreadLocal.set(bsh);
+		}
+		
+		return bsh;
+		
+	}
 	/**
 	 * Gets the value by context input.
 	 * 

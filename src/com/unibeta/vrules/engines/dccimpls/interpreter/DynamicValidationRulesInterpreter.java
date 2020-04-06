@@ -146,7 +146,7 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 		}
 
 		if (InterpreterUtils.hasBsh()) {
-			sb.append("bsh.Interpreter $bsh = new bsh.Interpreter();\n");
+			sb.append("bsh.Interpreter $bsh = getBsh();\n");
 		}
 
 		return sb.toString();
@@ -214,7 +214,6 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 		appendExtensionsClass(codes, entity);
 
 		codes.append("{\n\n");
-
 		codes.append(getValidClassName(entity.getClassName()) + " " + THIS_ROOT + " = null; ");
 
 		Map<String, String> types = buildEntityRulesDataTypeToMap(entity);

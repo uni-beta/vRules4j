@@ -33,7 +33,6 @@ import org.apache.log4j.Logger;
 
 import com.unibeta.vrules.constant.VRulesConstants;
 import com.unibeta.vrules.parsers.ConfigurationProxy;
-import com.unibeta.vrules.tools.CommonSyntaxs;
 import com.unibeta.vrules.utils.CommonUtils;
 
 /**
@@ -100,7 +99,7 @@ public class ValidationClassLoader extends URLClassLoader {
     }
 
 	private String getKey(String classRUIName) {
-		return Thread.currentThread().getId()+"@"+ConfigurationProxy.buildKeyValue(
+		return Thread.currentThread().getName()+"@"+ConfigurationProxy.buildKeyValue(
 		        classRUIName, decisionClass);
 	}
 
@@ -151,9 +150,9 @@ public class ValidationClassLoader extends URLClassLoader {
             instance = newValidationInstance();
         }
         
-        if((System.currentTimeMillis() - timestamp)/1000 > CommonSyntaxs.getRuleFileModifiedBeatsCheckInterval()*1000) {
-        	instancesPool.clear();
-        }
+//        if((System.currentTimeMillis() - timestamp)/1000 > CommonSyntaxs.getRuleFileModifiedBeatsCheckInterval()*1000) {
+//        	instancesPool.clear();
+//        }
 
         return instance;
     }
