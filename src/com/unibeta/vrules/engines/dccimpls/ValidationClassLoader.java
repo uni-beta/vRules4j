@@ -28,10 +28,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.log4j.Logger;
 
 import com.unibeta.vrules.constant.VRulesConstants;
+import com.unibeta.vrules.engines.dccimpls.rules.RulesValidation;
 import com.unibeta.vrules.parsers.ConfigurationProxy;
 import com.unibeta.vrules.utils.CommonUtils;
 
@@ -50,10 +53,9 @@ public class ValidationClassLoader extends URLClassLoader {
     private String fileName = null;
     private Class decisionClass = null;
 
-    private static Map instancesPool = Collections
-            .synchronizedMap(new HashMap());
-    private static long timestamp = System.currentTimeMillis();
-
+    private static Map<String,Queue<Object>> instancesPool = Collections
+            .synchronizedMap(new HashMap<String,Queue<Object>>());
+    
     public ValidationClassLoader(String fileName, Class decisionClass) {
 
         super(ValidationClassLoader.generateURLs(fileName), Thread
@@ -83,7 +85,12 @@ public class ValidationClassLoader extends URLClassLoader {
             instance = obj;
 
             synchronized (classRUIName) {
-                instancesPool.put(getKey(classRUIName), instance);
+            	if(instancesPool.get(getKey(classRUIName)) == null) {
+            		instancesPool.put(getKey(classRUIName), new LinkedBlockingQueue());
+            	}
+            	
+            	instancesPool.get(getKey(classRUIName)).clear();
+            	instancesPool.get(getKey(classRUIName)).add(instance);
             }
         } catch (ClassNotFoundException e) {
             log.warn(e.getMessage() + ", try to re-compile target source '"
@@ -95,12 +102,11 @@ public class ValidationClassLoader extends URLClassLoader {
             log.error(e.getMessage(), e);
         }
 
-        return instance;
+        return instancesPool.get(getKey(classRUIName)).poll();
     }
 
 	private String getKey(String classRUIName) {
-		return Thread.currentThread().getName()+"@"+ConfigurationProxy.buildKeyValue(
-		        classRUIName, decisionClass);
+		return "@"+ConfigurationProxy.buildKeyValue(classRUIName, decisionClass);
 	}
 
     /**
@@ -140,20 +146,20 @@ public class ValidationClassLoader extends URLClassLoader {
      */
     public Object getValidationInstance() throws ClassNotFoundException {
 
-        Object instance = null;
+    	Object instance = null;
+    	Queue queue = null;
+    	
+        queue = instancesPool.get(getKey(buildClassPath()));
 
-        String className = buildClassPath();
-
-        instance = instancesPool.get(getKey(className));
-
-        if (null == instance) {
-            instance = newValidationInstance();
+        if (null == queue) {
+        	instance = newValidationInstance();
+        }else {
+        	instance = queue.poll();
+        	if(instance == null) {
+        		instance = newValidationInstance();
+        	}
         }
         
-//        if((System.currentTimeMillis() - timestamp)/1000 > CommonSyntaxs.getRuleFileModifiedBeatsCheckInterval()*1000) {
-//        	instancesPool.clear();
-//        }
-
         return instance;
     }
 
@@ -162,5 +168,15 @@ public class ValidationClassLoader extends URLClassLoader {
         String className = COM_UNIBETA_VRULES_ENGINES_DCCIMPLS_RULES
                 + CommonUtils.generateClassNameByFileFullName(fileName);
         return className;
+    }
+    
+    public boolean offerValidationInstance(Object obj) {
+    	Queue queue = instancesPool.get(getKey( buildClassPath()));
+           
+         if (null != queue) {
+        	return queue.offer(obj);
+         }
+         
+         return true;
     }
 }

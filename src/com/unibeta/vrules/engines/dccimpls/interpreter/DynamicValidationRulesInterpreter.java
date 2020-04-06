@@ -53,13 +53,16 @@ import com.unibeta.vrules.utils.CommonUtils;
  * generating the validation java codes according to the vRules configuration.
  * 
  * @author jordan.xue
- * @version 1.0.1-Added getValueFromCollectionByContext() for context value
+ * @version 1.0.1@2008-06-03 22:20<br>
+ *          1. Added getValueFromCollectionByContext() for context value
  *          initialization.
- * @modified 2008-06-03 22:20
+ * @version 1.0.2@2020-04-06 11:06<br>
+ *          1. Added **Validation variables to improve performance.<br>
+ *          2. Fixed bugs if root ==null
  */
 public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 
-	private static final String CORE_ENGINE_VERSION = "1.0.0.b201705221255";
+	private static final String CORE_ENGINE_VERSION = "1.0.0.b202004061148";
 	private static final String CURRENT_RULE_ID_LIST = "$ruleIdList$";
 	// private static final String CURRENT_RULE_SET= "$ruleset$";
 	VRuleSuite ruleSuite = null;
@@ -102,6 +105,7 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 		// codes.append(" Map<String, List<String>> " + this.CURRENT_RULE_SET +
 		// " = null; \n");
 		codes.append(" List<String> " + this.CURRENT_RULE_ID_LIST + " = null; \n");
+		appendValidationVariables(codes,entities);
 		appendDeclaredMethods(codes);
 		appendInterfaceMethod(codes, entities);
 		appendInnerClasses(codes, entities);
@@ -109,6 +113,14 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 		codes.append("\n}\n");
 
 		return codes.toString();
+	}
+
+	private void appendValidationVariables(StringBuffer codes, Map<String, ObjectEntity> entities) {
+		
+		for(String key:entities.keySet()) {
+			codes.append(""+key+"Validation $"+key+"Validation$ = new "+key+"Validation();\n");
+		}
+		
 	}
 
 	Object generateAllDeclaredVars(Map<String, ObjectEntity> map) throws Exception {
@@ -437,21 +449,8 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 		codes.append("String $path$ = $xPath$" + ";\n");
 		// codes.append("String $path$ = $xPath$+\"/\""+entity.getId()+";\n");
 		codes.append("List errorList = new ArrayList();\n\n");
-
-		// if it is a subclass, validate the super rules first.
-		if (null != entity.getExtension() && entity.getExtension().trim().length() > 0) {
-
-			String[] extensions = entity.getExtension().split(",");
-			for (String s : extensions) {
-				String ext = s.trim();
-				if (ext.length() > 0) {
-					codes.append("String[] errMsgs" + ext + " = new " + ext + "Validation().validate(" + THIS_ROOT
-							+ ",$path$);\n");
-					codes.append("copyArrayToList(errMsgs" + ext + ",errorList);\n");
-				}
-			}
-		}
-
+		
+		//check nillable first
 		if (!entity.isNill() && !ruleSuite.getGlobalConfig().isEnableBinding()) {
 			codes.append("if(null == obj) ");
 			codes.append("{\n");
@@ -473,6 +472,20 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 			// + " " + "${xPath}:=\"+ $xPath$+\"\");\n");
 			codes.append("return null;\n");
 			codes.append("\n}\n");
+		}
+
+		// if it is a subclass, validate the super rules first.
+		if (null != entity.getExtension() && entity.getExtension().trim().length() > 0) {
+
+			String[] extensions = entity.getExtension().split(",");
+			for (String s : extensions) {
+				String ext = s.trim();
+				if (ext.length() > 0) {
+					codes.append("String[] errMsgs" + ext + " = new " + ext + "Validation().validate(" + THIS_ROOT
+							+ ",$path$);\n");
+					codes.append("copyArrayToList(errMsgs" + ext + ",errorList);\n");
+				}
+			}
 		}
 
 		List rules = entity.getRules();
@@ -1373,7 +1386,7 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 			// codes.append("String $path$ = " +"\""+"\"" +";\n");
 
 			codes.append(canonicalName + " obj1 = (" + canonicalName + ") obj;\n");
-			codes.append("$errors = new " + entity.getId() + "Validation" + "().validate(obj1,$path$);\n");
+			codes.append("$errors = $" + entity.getId() + "Validation$" + ".validate(obj1,$path$);\n");
 
 			codes.append("\n}\n");
 		}

@@ -48,6 +48,7 @@ public class CoreDccEngine {
 	static Logger log = Logger.getLogger(CoreDccEngine.class);
 	static Map<String, byte[]> lockMap = new HashMap<String, byte[]>();
 	String lockedFileName = "";
+	static Long maxInterval = CommonSyntaxs.getRuleFileModifiedBeatsCheckInterval();
 
 	/**
 	 * Validates the specified object by <code>entityId</code>.
@@ -112,10 +113,9 @@ public class CoreDccEngine {
 			log.warn(e.getMessage());
 			log.info("begin re-try interprete and invoke " + fileName + " ...");
 
-			long interval = CommonSyntaxs.getRuleFileModifiedBeatsCheckInterval();
 			CommonSyntaxs.setRuleFileModifiedBeatsCheckInterval(0L);
 			errors = validate(object, fileName, entityId, decisionObject, vrulesMode);
-			CommonSyntaxs.setRuleFileModifiedBeatsCheckInterval(interval);
+			CommonSyntaxs.setRuleFileModifiedBeatsCheckInterval(maxInterval);
 
 			log.info(fileName + " is interpreted and invoked successfully in second time.");
 		}
@@ -272,15 +272,20 @@ public class CoreDccEngine {
 			rulesValidation = (RulesValidation) validator;
 		}
 
-		if (object instanceof Map) {
+		try {
+			if (object instanceof Map) {
 
-			Map<String, List<String>> map = ConfigurationProxy.getRulesetMap(fileName, decisionClass);
-			errors = rulesValidation.validate((Map) object, map);
-		} else {
-			errors = rulesValidation.validate(object, entityId,
-					ConfigurationProxy.getRulesetMap(fileName, decisionClass));
+				Map<String, List<String>> map = ConfigurationProxy.getRulesetMap(fileName, decisionClass);
+				errors = rulesValidation.validate((Map) object, map);
+			} else {
+				errors = rulesValidation.validate(object, entityId,
+						ConfigurationProxy.getRulesetMap(fileName, decisionClass));
+			}
+		} finally{
+			validationClassLoader.offerValidationInstance(rulesValidation);
 		}
 
+		
 		return errors;
 	}
 

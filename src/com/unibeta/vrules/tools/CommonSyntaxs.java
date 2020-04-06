@@ -108,6 +108,9 @@ public class CommonSyntaxs {
 	private static boolean getConfiguredEnablePrint() {
 
 		String paths = getConfiguredJvmArgValue("enableprint");// System.getProperty("vRules4j.enableprint");
+		if(CommonUtils.isNullOrEmpty(paths)) {
+			paths = getConfiguredJvmArgValue("enablePrint");
+		}
 
 		if (!CommonUtils.isNullOrEmpty(paths) && "false".equalsIgnoreCase(paths.trim())) {
 			return false;
