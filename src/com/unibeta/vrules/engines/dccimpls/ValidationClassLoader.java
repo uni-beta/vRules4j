@@ -34,7 +34,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.apache.log4j.Logger;
 
 import com.unibeta.vrules.constant.VRulesConstants;
-import com.unibeta.vrules.engines.dccimpls.rules.RulesValidation;
 import com.unibeta.vrules.parsers.ConfigurationProxy;
 import com.unibeta.vrules.utils.CommonUtils;
 
@@ -79,7 +78,7 @@ public class ValidationClassLoader extends URLClassLoader {
         String classRUIName = buildClassPath();
 
         try {
-            Class clazzDcc = loadClass(classRUIName, false);
+            Class clazzDcc = loadClass(classRUIName, true);
 
             Object obj = clazzDcc.newInstance();
             instance = obj;
@@ -178,5 +177,9 @@ public class ValidationClassLoader extends URLClassLoader {
          }
          
          return true;
+    }
+    
+    public static Map<String,Queue<Object>> getInstancePool(){
+    	return instancesPool;
     }
 }

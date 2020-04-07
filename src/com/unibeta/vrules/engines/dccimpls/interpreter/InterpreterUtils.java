@@ -46,7 +46,7 @@ import bsh.Interpreter;
 public class InterpreterUtils {
 
 	private static final String STRING_FORMAT = "@StRiNg-FoRmAt@";
-	private static final String REGEX_EVAL_EXPRESSION = "\\{[\\s\\S]*\\}";
+	private static final String REGEX_EVAL_EXPRESSION = "#\\{[\\s\\S]*\\}";
 	private static Logger log = Logger.getLogger(InterpreterUtils.class);
 	private static Pattern evalPattern = Pattern.compile(REGEX_EVAL_EXPRESSION, Pattern.DOTALL);
 	private static Boolean $hasBsh = null;
