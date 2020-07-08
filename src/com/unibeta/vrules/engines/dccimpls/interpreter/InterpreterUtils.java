@@ -26,9 +26,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.unibeta.vrules.parsers.ObjectSerializer;
 import com.unibeta.vrules.utils.CommonUtils;
@@ -46,23 +48,24 @@ import bsh.Interpreter;
 public class InterpreterUtils {
 
 	private static final String STRING_FORMAT = "@StRiNg-FoRmAt@";
-	private static final String REGEX_EVAL_EXPRESSION = "#\\{[\\s\\S]*\\}";
-	private static Logger log = Logger.getLogger(InterpreterUtils.class);
+	private static final String REGEX_EVAL_EXPRESSION = "\\{[\\s\\S]*\\}";
+	private static Logger log = LoggerFactory.getLogger(InterpreterUtils.class);
 	private static Pattern evalPattern = Pattern.compile(REGEX_EVAL_EXPRESSION, Pattern.DOTALL);
 	private static Boolean $hasBsh = null;
 	private static ThreadLocal<Interpreter> bshThreadLocal = new ThreadLocal<Interpreter>();
 
 	static public Interpreter getBsh() {
 		Interpreter bsh = bshThreadLocal.get();
-		
-		if(null == bsh) {
+
+		if (null == bsh) {
 			bsh = new Interpreter();
 			bshThreadLocal.set(bsh);
 		}
-		
+
 		return bsh;
-		
+
 	}
+
 	/**
 	 * Gets the value by context input.
 	 * 
@@ -195,35 +198,43 @@ public class InterpreterUtils {
 			return msg;
 		}
 		String[] exprs = msg.split("#");
+		String result = new String(msg);
 
-		List<String> results = new ArrayList<String>();
-		StringBuffer format = new StringBuffer();
+		// List<String> results = new ArrayList<String>();
+		// StringBuffer format = new StringBuffer();
 		for (String expr : exprs) {
-
 			if (evalPattern.matcher(expr).find()) {
 
-				int end = expr.lastIndexOf("}");
+				int end = resolveValidEndIndex(expr);// expr.indexOf("}");
 
 				if (end < 0) {
 					continue;
 				}
 				String express = expr.substring(1, end);
 				Object o = null;
-
+				String segment = "#" + expr.substring(0, end + 1);
+				String r = null;
 				try {
 					o = bsh.eval(express.replaceAll("\\s+", " "));
-					results.add(ObjectSerializer.xStreamToXml(o));
+					r = ObjectSerializer.xStreamToXml(o);
+					// results.add(r);
 				} catch (EvalError e) {
 					String errormsg = "'evaluate #{" + express + "} error, caused by " + e.getMessage() + "'";
 					log.error(errormsg, e);
-					results.add(errormsg);
+					// results.add(errormsg);
+					r = "[" + errormsg + "]";
 				}
+
+				result = result.replace(segment, r);
+
 			}
-			format.append(expr.replaceAll(REGEX_EVAL_EXPRESSION, STRING_FORMAT).replace("%", "%%")
-					.replace(STRING_FORMAT, "%s"));
+			// format.append(expr.replaceAll(REGEX_EVAL_EXPRESSION,
+			// STRING_FORMAT).replace("%", "%%")
+			// .replace(STRING_FORMAT, "%s"));
 		}
 
-		return String.format(format.toString(), results.toArray());
+		// return String.format(format.toString(), results.toArray());
+		return result;
 	}
 
 	/*
@@ -233,6 +244,31 @@ public class InterpreterUtils {
 	 * String s = InterpreterUtils.bshEval(new Interpreter(), msg);
 	 * System.out.println(s); }
 	 */
+
+	private static int resolveValidEndIndex(String expr) {
+
+		if (null == expr) {
+			return -1;
+		}
+
+		Stack<Integer> stack = new Stack<Integer>();
+		int lastIndex = expr.lastIndexOf("}");
+
+		for (int i = lastIndex; i > 0; i--) {
+			if (expr.charAt(i) == '}') {
+				stack.push(i);
+			}
+
+			if (expr.charAt(i) == '{' && !stack.isEmpty()) {
+				stack.pop();
+			}
+		}
+		if (!stack.isEmpty()) {
+			return stack.pop();
+		} else {
+			return -1;
+		}
+	}
 
 	/**
 	 * Evaluates the input msg with give bsh context.
@@ -324,11 +360,11 @@ public class InterpreterUtils {
 			return;
 		}
 
-//		try {
-//			bsh.unset(name);
-//		} catch (EvalError e) {
-//			log.error("BeanShell unset variable error caused by " + e.getMessage(), e);
-//		}
+		// try {
+		// bsh.unset(name);
+		// } catch (EvalError e) {
+		// log.error("BeanShell unset variable error caused by " + e.getMessage(), e);
+		// }
 	}
 
 	public static boolean isNumericType(String className) {

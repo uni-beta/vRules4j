@@ -23,7 +23,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintWriter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.tools.javac.Main;
 import com.unibeta.vrules.constant.VRulesConstants;
@@ -39,7 +40,7 @@ public class DynamicCompiler {
 
 	private static final int COMPILING_SUGGESS = 0;
 
-	private static Logger log = Logger.getLogger(DynamicCompiler.class);
+	private static Logger log = LoggerFactory.getLogger(DynamicCompiler.class);
 
 	private static final String DIRECTORY = "-d";
 	private static final String CLASSPATH = "-classpath";

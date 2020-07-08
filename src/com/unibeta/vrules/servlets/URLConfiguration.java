@@ -28,7 +28,8 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.unibeta.vrules.tools.CommonSyntaxs;
 import com.unibeta.vrules.utils.CommonUtils;
@@ -61,7 +62,7 @@ public class URLConfiguration {
 	private static final String CLASSES = "classes";
 	private static final String WEB_INF_REGEX = "^WEB-INF$";
 
-	private static Logger log = Logger.getLogger(URLConfiguration.class);
+	private static Logger log = LoggerFactory.getLogger(URLConfiguration.class);
 	final private static String CLASSPATH_SEPARATOR = File.pathSeparator;
 
 	static {
@@ -324,14 +325,15 @@ public class URLConfiguration {
 
 		for (String p : paths) {
 			if (!CommonUtils.isNullOrEmpty(p)) {
-				if (p.endsWith(".jar")) {
-					sb.append(resolveSpringBootJarClasspath(p));
-				} else {
-					sb.append(p + File.pathSeparator);
-				}
+				sb.append(p + File.pathSeparator);
 			}
 		}
 
+		if (!CommonUtils.isNullOrEmpty(CommonSyntaxs.getXspringboot())
+				&& CommonSyntaxs.getXspringboot().endsWith("jar")) {
+			sb.append(resolveSpringBootJarClasspath(CommonSyntaxs.getXspringboot()));
+		}
+		
 		URLConfiguration.setClasspath(sb.toString());
 
 	}
@@ -389,7 +391,7 @@ public class URLConfiguration {
 
 	private static void setExtraClasspath() {
 
-		String paths =CommonSyntaxs.getXclasspath();
+		String paths = CommonSyntaxs.getXclasspath();
 
 		if (!CommonUtils.isNullOrEmpty(paths)) {
 			String[] ps = paths.split(",");
@@ -398,7 +400,7 @@ public class URLConfiguration {
 						+ File.pathSeparator + s + File.pathSeparator);
 			}
 		}
-		
+
 		xclasspath = paths;
 	}
 

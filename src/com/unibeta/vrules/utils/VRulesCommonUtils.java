@@ -28,7 +28,8 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.Advised;
 
 import com.unibeta.vrules.reflect.ObjectReflector;
@@ -41,7 +42,7 @@ import com.unibeta.vrules.reflect.ObjectReflector;
 public class VRulesCommonUtils {
 
     private static final String XML_SCHEMA_DEFAULT_NAME = "##default";
-    private static Logger log = Logger.getLogger(VRulesCommonUtils.class);
+    private static Logger log = LoggerFactory.getLogger(VRulesCommonUtils.class);
 
     /**
      * Builds the java been field's wrapped xml element name map, which is of

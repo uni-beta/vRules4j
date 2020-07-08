@@ -26,6 +26,37 @@ public class CommonSyntaxs {
 	private static Boolean enablePrint = null;
 	private static Long ruleFileModifiedBeatsCheckInterval = null;
 	private static String xclasspath = null;
+	private static String xspringboot = null;
+	
+	/**
+	 * Get extra springboot jar for engine runtime dynamic compiling usage. <br>
+	 * Can be configured via '-DvRules4j.springboot=D:\app\lib\springboot.jar' in runtime JVM args
+	 * 
+	 * @return 
+	 */
+	public static String getXspringboot() {
+
+		if (null == xspringboot) {
+			String configuredAppClasspath = getConfiguredJvmArgValue("springboot");
+
+			if (!CommonUtils.isNullOrEmpty(configuredAppClasspath)) {
+				xspringboot = configuredAppClasspath;
+			} else {
+				xspringboot = "";
+			}
+		}
+
+		return xspringboot;
+	}
+	
+	/**
+	 * Set extra springboot jar for engine runtime dynamic compiling usage. <br>
+	 * 
+	 * @param xspringboot
+	 */
+	public static void setXspringboot(String xspringboot) {
+		CommonSyntaxs.xspringboot = xspringboot;
+	}
 
 	/**
 	 * Get extra classpath for engine runtime dynamic compiling usage. <br>

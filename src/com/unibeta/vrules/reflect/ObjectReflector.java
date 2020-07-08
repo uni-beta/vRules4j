@@ -33,7 +33,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.unibeta.vrules.base.ObjectEntity;
 import com.unibeta.vrules.base.Rule;
@@ -48,7 +49,7 @@ import com.unibeta.vrules.utils.CommonUtils;
  */
 public class ObjectReflector {
 
-    private static Logger log = Logger.getLogger(ObjectReflector.class);
+    private static Logger log = LoggerFactory.getLogger(ObjectReflector.class);
 
     private static final String JAVA_LANG_BOOLEAN = VRulesConstants.JAVA_LANG_BOOLEAN;
     private static final String BOOLEAN = VRulesConstants.JAVA_BOOLEAN;

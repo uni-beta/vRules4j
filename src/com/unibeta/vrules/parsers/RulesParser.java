@@ -33,7 +33,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -122,7 +123,7 @@ public class RulesParser {
 
 	private static final String REF_ID = "refId";
 
-	private static Logger logger = Logger.getLogger(RulesParser.class);
+	private static Logger logger = LoggerFactory.getLogger(RulesParser.class);
 
 	// private static String fileName = null;
 	// private static Map rulesConfigMap = null;

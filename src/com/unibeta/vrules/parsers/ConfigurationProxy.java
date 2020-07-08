@@ -48,8 +48,6 @@ import com.unibeta.vrules.utils.CommonUtils;
  */
 public class ConfigurationProxy {
 
-	private static final int BEATS_CHECK_INTERVAL = 3000;
-
 	private ConfigurationProxy() {
 
 	}
@@ -131,7 +129,7 @@ public class ConfigurationProxy {
 		}
 		return isIncludedModified(fileName, decisionClass);
 	}
-
+	
 	private static File getValidFile(String fileName) {
 
 		File file = new File(fileName);

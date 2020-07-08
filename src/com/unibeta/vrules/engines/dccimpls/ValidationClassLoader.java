@@ -31,7 +31,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.unibeta.vrules.constant.VRulesConstants;
 import com.unibeta.vrules.parsers.ConfigurationProxy;
@@ -46,7 +47,7 @@ import com.unibeta.vrules.utils.CommonUtils;
  */
 public class ValidationClassLoader extends URLClassLoader {
 
-    private static Logger log = Logger.getLogger(ValidationClassLoader.class);
+    private static Logger log = LoggerFactory.getLogger(ValidationClassLoader.class);
 
     private static final String COM_UNIBETA_VRULES_ENGINES_DCCIMPLS_RULES = "com.unibeta.vrules.engines.dccimpls.rules.";
     private String fileName = null;
@@ -92,8 +93,8 @@ public class ValidationClassLoader extends URLClassLoader {
             	instancesPool.get(getKey(classRUIName)).add(instance);
             }
         } catch (ClassNotFoundException e) {
-            log.warn(e.getMessage() + ", try to re-compile target source '"
-                    + this.fileName + "' again in soon.");
+//            log.warn(e.getMessage() + ", try to re-compile target source '"
+//                    + this.fileName + "' again in soon.");
             throw e;
         } catch (InstantiationException e) {
             log.error(e.getMessage(), e);

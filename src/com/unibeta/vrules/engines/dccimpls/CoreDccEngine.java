@@ -28,7 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.unibeta.vrules.base.GlobalConfig;
 import com.unibeta.vrules.engines.dccimpls.rules.RulesValidation;
@@ -45,7 +46,7 @@ import com.unibeta.vrules.utils.CommonUtils;
  */
 public class CoreDccEngine {
 
-	static Logger log = Logger.getLogger(CoreDccEngine.class);
+	static Logger log = LoggerFactory.getLogger(CoreDccEngine.class);
 	static Map<String, byte[]> lockMap = new HashMap<String, byte[]>();
 	String lockedFileName = "";
 	static Long maxInterval = CommonSyntaxs.getRuleFileModifiedBeatsCheckInterval();
@@ -107,17 +108,22 @@ public class CoreDccEngine {
 				errors = invokeValidate(object, fileName, entityId, false, decisionClass);
 			}
 		} catch (ClassNotFoundException e) {
-			ConfigurationProxy.getModifiedTimeTable().put(ConfigurationProxy.buildKeyValue(fileName, decisionClass),
-					new Long(System.currentTimeMillis()));
-
-			log.warn(e.getMessage());
-			log.info("begin re-try interprete and invoke " + fileName + " ...");
-
-			CommonSyntaxs.setRuleFileModifiedBeatsCheckInterval(0L);
-			errors = validate(object, fileName, entityId, decisionObject, vrulesMode);
-			CommonSyntaxs.setRuleFileModifiedBeatsCheckInterval(maxInterval);
-
-			log.info(fileName + " is interpreted and invoked successfully in second time.");
+			ConfigurationProxy.getModifiedTimeTable().remove(ConfigurationProxy.buildKeyValue(fileName, decisionClass));
+			log.error(ClassNotFoundException.class.getCanonicalName()+ ":'" + e.getMessage() + "' occurred in rule file [" + fileName+"]");
+			
+//			log.info("begin re-try interprete and invoke " + fileName + " ...");
+//
+//			try {
+//				Thread.sleep(1000 * 3);
+//				CommonSyntaxs.setRuleFileModifiedBeatsCheckInterval(0L);
+//				errors = validate(object, fileName, entityId, decisionObject, vrulesMode);
+//				CommonSyntaxs.setRuleFileModifiedBeatsCheckInterval(maxInterval);
+//			} catch (ClassNotFoundException e1) {
+//				ConfigurationProxy.getModifiedTimeTable().remove(ConfigurationProxy.buildKeyValue(fileName, decisionClass));
+//				throw e;
+//			}
+//
+//			log.info(fileName + " is interpreted and invoked successfully in second time.");
 		}
 
 		if (errors != null && errors.length > 0) {
@@ -176,9 +182,7 @@ public class CoreDccEngine {
 		String result = DynamicCompiler.compile(javaFile);
 
 		if (result != null) {
-
-			ConfigurationProxy.getModifiedTimeTable().put(ConfigurationProxy.buildKeyValue(fileName, decisionClass),
-					new Long(System.currentTimeMillis()));
+			ConfigurationProxy.getModifiedTimeTable().remove(ConfigurationProxy.buildKeyValue(fileName, decisionClass));
 
 			throw new Exception(
 					"vRules4j dynamic compiling failed caused by the incorrect configuration, please check the rules configuration file.\nThe invalid file is located in ["
@@ -281,11 +285,10 @@ public class CoreDccEngine {
 				errors = rulesValidation.validate(object, entityId,
 						ConfigurationProxy.getRulesetMap(fileName, decisionClass));
 			}
-		} finally{
+		} finally {
 			validationClassLoader.offerValidationInstance(rulesValidation);
 		}
 
-		
 		return errors;
 	}
 

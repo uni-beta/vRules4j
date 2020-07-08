@@ -27,7 +27,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <code>VRulesEngineServlet</code> is a servelt used to plug vRuels4j into the
@@ -55,7 +56,7 @@ import org.apache.log4j.Logger;
  */
 public class VRules4jServlet implements Servlet {
 
-    private static Logger log = Logger.getLogger(VRules4jServlet.class);
+    private static Logger log = LoggerFactory.getLogger(VRules4jServlet.class);
 
     public void destroy() {
 

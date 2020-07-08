@@ -13,11 +13,12 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.log4j.Logger;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.Expand;
 import org.apache.tools.ant.taskdefs.Zip;
 import org.apache.tools.ant.types.FileSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ZipUitls {
 
@@ -25,7 +26,7 @@ public class ZipUitls {
 	private static final String FILE_JAR = ".jar";
 	private static final String FILE_ZIP = ".zip";
 	private static final Project DEFAULT_PROJECT = new Project();
-	private static Logger log = Logger.getLogger(ZipUitls.class);
+	private static Logger log = LoggerFactory.getLogger(ZipUitls.class);
 
 	/**
 	 * zip given files to zip file

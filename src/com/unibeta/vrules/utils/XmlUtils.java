@@ -40,12 +40,13 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.log4j.Logger;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -69,7 +70,7 @@ public class XmlUtils {
      * INDENT_YES = "yes";
      */
     private static final int FIRST_ELEMENT = 0;
-    static Logger logger = Logger.getLogger(XmlUtils.class);
+    static Logger logger = LoggerFactory.getLogger(XmlUtils.class);
 
     /**
      * Saves the document instance to xml file.
@@ -445,7 +446,7 @@ public class XmlUtils {
 //            bufferedWriter.write(xmlStr);
         } catch (IOException e1) {
             e1.printStackTrace();
-            logger.error(e1);
+            logger.error(e1.getMessage(), e1);
             throw e1;
         } finally {
             if (bufferedWriter!= null) {
