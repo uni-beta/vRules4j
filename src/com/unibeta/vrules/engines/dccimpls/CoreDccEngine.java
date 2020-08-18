@@ -269,6 +269,10 @@ public class CoreDccEngine {
 		} else {
 			validator = validationClassLoader.newValidationInstance();
 		}
+		
+		if(validator == null) {
+			validator = validationClassLoader.newValidationInstance();
+		}
 
 		String[] errors = null;
 

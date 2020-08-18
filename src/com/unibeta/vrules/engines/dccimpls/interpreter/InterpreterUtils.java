@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.unibeta.vrules.parsers.ObjectSerializer;
+import com.unibeta.vrules.tools.CommonSyntaxs;
 import com.unibeta.vrules.utils.CommonUtils;
 
 import bsh.EvalError;
@@ -216,7 +217,17 @@ public class InterpreterUtils {
 				String r = null;
 				try {
 					o = bsh.eval(express.replaceAll("\\s+", " "));
-					r = ObjectSerializer.xStreamToXml(o);
+
+					if (o != null) {
+						if (CommonSyntaxs.isEnablePrint()) {
+							r = ObjectSerializer.xStreamToXml(o);
+						}else {
+							r= o.toString();
+						}
+					} else {
+						r = "null";
+					}
+
 					// results.add(r);
 				} catch (EvalError e) {
 					String errormsg = "'evaluate #{" + express + "} error, caused by " + e.getMessage() + "'";

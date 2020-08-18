@@ -173,7 +173,7 @@ public class ValidationClassLoader extends URLClassLoader {
     public boolean offerValidationInstance(Object obj) {
     	Queue queue = instancesPool.get(getKey( buildClassPath()));
            
-         if (null != queue) {
+         if (null != queue && null != obj) {
         	return queue.offer(obj);
          }
          
