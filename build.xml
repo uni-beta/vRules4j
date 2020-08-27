@@ -5,7 +5,7 @@
 	<!-- set global properties for this build -->
 	<property name="project.name" value="vRules4j"/>
 	<property name="version" value="3.4.0"/>
-	<property name="src" location="src"/>
+	<property name="src" location="src/main/java"/>
 	<property name="build.dir" location="build"/>
 	<property name="build.config.dir" location="build/config"/>
 	<property name="classes.dir" location="classes"/>

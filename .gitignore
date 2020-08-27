@@ -9,3 +9,6 @@
 /.settings/*
 /test/*
 build/
+/target/
+files
+/src/test/ErrorInfo4.java
