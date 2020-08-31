@@ -44,7 +44,7 @@
 		</javac>
 	</target>
 	<tstamp>
-		<format property="touch.time" pattern="yyyyMMddhhmmss" locale="en"
+		<format property="touch.time" pattern="yyyyMMddHHmmss" locale="en"
 			offset="0" unit="hour"/>
 	</tstamp>
 	<target name="distribute" depends="compile" description="compile the source ">
