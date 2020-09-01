@@ -101,7 +101,7 @@
 
 	</dependencies>
 	<build>
-		<finalName>${artifactId}-${version}-b${timestamp}</finalName>
+		<finalName>${artifactId}-${version}.b${timestamp}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
