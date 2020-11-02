@@ -19,6 +19,7 @@
  */
 package com.unibeta.vrules.utils;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,7 +28,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.StringBufferInputStream;
 import java.io.StringReader;
 import java.io.Writer;
 
@@ -252,11 +252,15 @@ public class XmlUtils {
         DocumentBuilder docBuilder = null;
         Document doc = null;
         InputStream inputStream = null;
+        
+        if(payload == null) {
+        	return null;
+        }
 
         try {
             docBuilder = DocumentBuilderFactory.newInstance()
                     .newDocumentBuilder();
-            inputStream = new StringBufferInputStream(payload);
+            inputStream = new ByteArrayInputStream(payload.getBytes(ENCODING_UTF_8));
 
             doc = docBuilder.parse(inputStream);
         } catch (Exception e) {
