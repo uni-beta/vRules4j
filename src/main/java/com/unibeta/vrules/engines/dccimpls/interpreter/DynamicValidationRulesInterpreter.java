@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.googlejavaformat.java.Formatter;
 import com.unibeta.vrules.base.ObjectEntity;
 import com.unibeta.vrules.base.Rule;
 import com.unibeta.vrules.base.Rule.Binding;
@@ -85,7 +86,7 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 		entities = ruleSuite.getObjectEntities();
 
 		String javaCodes = generateCodes(entities, fileName);
-
+		
 		return writeToFile(javaCodes, fileName);
 	}
 
@@ -1484,6 +1485,14 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 		String javaFileName = CommonUtils.getFilePathName(fileName) + javaClassName;
 
 		FileWriter writer = null;
+		
+		try {
+			Class.forName("com.google.googlejavaformat.java.Formatter");
+			javaCodes = new Formatter().formatSource(javaCodes);
+		}catch(Exception e){
+			//empty
+		}
+		
 		try {
 
 			writer = new FileWriter(javaFileName);

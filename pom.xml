@@ -98,7 +98,12 @@
 			<version>3.0.5</version>
 			<!-- <scope>test</scope> -->
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/com.google.googlejavaformat/google-java-format -->
+		<dependency>
+		    <groupId>com.google.googlejavaformat</groupId>
+		    <artifactId>google-java-format</artifactId>
+		    <version>1.7</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>${artifactId}-${version}.b${timestamp}</finalName>
