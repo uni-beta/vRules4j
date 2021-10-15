@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.sun.tools.javac.Main;
+import com.unibeta.vrules.cache.CacheManagerFactory;
 import com.unibeta.vrules.constant.VRulesConstants;
 import com.unibeta.vrules.servlets.URLConfiguration;
 import com.unibeta.vrules.utils.CommonUtils;
@@ -37,6 +38,8 @@ import com.unibeta.vrules.utils.CommonUtils;
  * @author jordan
  */
 public class DynamicCompiler {
+
+	private static final String COMPILED_JAVA = "compiled_java";
 
 	private static final int COMPILING_SUGGESS = 0;
 
@@ -65,8 +68,20 @@ public class DynamicCompiler {
 			throw new Exception(errrorMessage);
 		}
 
-		String destFolder = CommonUtils.getFilePathName(fileName)
-				+ VRulesConstants.DYNAMIC_CLASSES_FOLDER_NAME + File.separator;
+		File javaFile = new File(fileName);
+		Object catchedFileName = CacheManagerFactory.getGlobalCacheInstance().get(COMPILED_JAVA, javaFile.getName());
+		if (catchedFileName == null) {
+			CacheManagerFactory.getGlobalCacheInstance().put(COMPILED_JAVA, javaFile.getName(), fileName);
+		} else {
+			if (!catchedFileName.equals(fileName)) {
+				throw new Exception(
+						"[Error]duplicated class name with different file path. class name is " + javaFile.getName()
+								+ ", old file path is:" + catchedFileName + "; new file path is:" + fileName);
+			}
+		}
+
+		String destFolder = CommonUtils.getFilePathName(fileName) + VRulesConstants.DYNAMIC_CLASSES_FOLDER_NAME
+				+ File.separator;
 
 		File file = new File(destFolder);
 		if (!file.exists()) {
@@ -78,14 +93,10 @@ public class DynamicCompiler {
 
 		URLConfiguration.initClasspathURLs();
 
-		if (URLConfiguration.isInContainer()
-				&& !CommonUtils.isNullOrEmpty(URLConfiguration.getClasspath())) {
-			log.debug("vRules4j gets the classpath is: "
-					+ URLConfiguration.getClasspath());
+		if (URLConfiguration.isInContainer() && !CommonUtils.isNullOrEmpty(URLConfiguration.getClasspath())) {
+			log.debug("vRules4j gets the classpath is: " + URLConfiguration.getClasspath());
 
-			opinions = new String[] { CLASSPATH,
-					URLConfiguration.getClasspath(), DIRECTORY, destFolder,
-					fileName };
+			opinions = new String[] { CLASSPATH, URLConfiguration.getClasspath(), DIRECTORY, destFolder, fileName };
 		} else {
 			opinions = new String[] { DIRECTORY, destFolder, fileName };
 		}
