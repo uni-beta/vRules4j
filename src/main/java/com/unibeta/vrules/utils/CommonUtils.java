@@ -29,6 +29,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import com.unibeta.vrules.parsers.ConfigurationProxy;
+
 /**
  * A common util class.
  * 
@@ -217,7 +219,8 @@ public class CommonUtils {
 		StringBuffer sb = new StringBuffer();
 
 		// String filePathName = getFilePathName(fileName);
-		String fileFullName = getFileFullName(fileName);
+		String fileFullName = ConfigurationProxy.isEnableFullClassNameMode() ? getFileFullName(fileName)
+				: getFileSimpleName(fileName);
 
 		String name = fileFullName.trim().replace(".", "-").replace("@", "-").replace("#", "-").replace("$", "-")
 				.replace("&", "-").replace("*", "-").replace("^", "-").replace("%", "-").replace("!", "-")

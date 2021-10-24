@@ -1,7 +1,5 @@
 package test.com.unibeta.vrules.engines;
 
-import groovy.lang.GroovyClassLoader;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,19 +9,21 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import test.cases.ErrorField;
-import test.cases.ErrorInfo;
-import test.cases.ISon;
-import test.cases.Son;
-import test.com.unibeta.vrules.BasicTester;
-import bsh.EvalError;
-import bsh.Interpreter;
-
+import com.thoughtworks.xstream.XStream;
 import com.unibeta.vrules.base.Rule;
 import com.unibeta.vrules.base.VRuleSuite;
 import com.unibeta.vrules.engines.ValidationEngine;
 import com.unibeta.vrules.engines.ValidationEngineFactory;
 import com.unibeta.vrules.tools.Java2vRules;
+
+import bsh.EvalError;
+import bsh.Interpreter;
+import groovy.lang.GroovyClassLoader;
+import test.cases.ErrorField;
+import test.cases.ErrorInfo;
+import test.cases.ISon;
+import test.cases.Son;
+import test.com.unibeta.vrules.BasicTester;
 
 public class ValidationEngineTester extends BasicTester {
 
@@ -134,7 +134,7 @@ public class ValidationEngineTester extends BasicTester {
 //            list = impl.validate(new Object[]{obj,obj1}, sonFile,errorInfo);
             errs = impl.validate(map, sonFile);
             
-//            System.out.println(new XStream().toXML(obj));
+            System.out.println(new XStream().toXML(errs));
 //            System.out.println(new XStream().toXML(obj1));
         } catch (Exception e) {
             // TODO Auto-generated catch block
