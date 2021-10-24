@@ -176,14 +176,29 @@ public class CommonUtils {
 	 * @return null if the fileNanme is of a directory. otherwise return the file
 	 *         name.
 	 */
-	public static String getFileSimpleName(String fileName) {
+	private static String getFileSimpleName(String fileName) {
 
 		File file = new File(fileName);
 		String name = file.getName();
 
-		if (file.getName().lastIndexOf(".") > 0) {
-			name = file.getName().substring(0, file.getName().lastIndexOf("."));
+		String fullName = file.getName();
+		if (fullName.lastIndexOf(".") > 0) {
+			name = fullName.substring(0, fullName.lastIndexOf("."));
 		}
+
+		return name;
+	}
+
+	private static String getFileFullName(String fileName) {
+
+		File file = new File(fileName);
+		String name = file.getPath();
+
+		String fullName = file.getPath();
+		if (fullName.lastIndexOf(".") > 0) {
+			name = fullName.substring(0, fullName.lastIndexOf("."));
+		}
+
 		return name;
 	}
 
@@ -201,10 +216,20 @@ public class CommonUtils {
 
 		StringBuffer sb = new StringBuffer();
 
-		String simpleName = getFileSimpleName(fileName);
-		String name = simpleName.trim().replace(".", "-").replace("@", "-").replace("#", "-").replace("$", "-")
+		// String filePathName = getFilePathName(fileName);
+		String fileFullName = getFileFullName(fileName);
+
+		String name = fileFullName.trim().replace(".", "-").replace("@", "-").replace("#", "-").replace("$", "-")
 				.replace("&", "-").replace("*", "-").replace("^", "-").replace("%", "-").replace("!", "-")
-				.replace(",", "-").replace("/", "-").replace("\\", "-").replace("+", "-").replace("?", "-");
+				.replace(",", "-").replace("/", "-").replace("\\", "-").replace("+", "-").replace("?", "-")
+				.replace(":", "-").replace("(", "-").replace(")", "-").replace("[", "-").replace("]", "-")
+				.replace("{", "-").replace("}", "-");
+
+		int maxLength = 127;
+
+		if (name.length() > maxLength) {
+			name = "v-" + name.substring(name.length() - maxLength);
+		}
 
 		String[] names = name.split("-");
 
@@ -640,8 +665,8 @@ public class CommonUtils {
 
 		File srcFile = new File(src);
 		File destFile = new File(dest);
-		
-		if(!srcFile.exists()) {
+
+		if (!srcFile.exists()) {
 			throw new Exception(src + " is not exist");
 		}
 
