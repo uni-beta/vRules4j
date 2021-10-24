@@ -176,7 +176,7 @@ public class CommonUtils {
 	 * @return null if the fileNanme is of a directory. otherwise return the file
 	 *         name.
 	 */
-	private static String getFileSimpleName(String fileName) {
+	public static String getFileSimpleName(String fileName) {
 
 		File file = new File(fileName);
 		String name = file.getName();
