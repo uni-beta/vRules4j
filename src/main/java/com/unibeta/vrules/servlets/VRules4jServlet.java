@@ -30,6 +30,8 @@ import javax.servlet.ServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.unibeta.vrules.parsers.ConfigurationProxy;
+
 /**
  * <code>VRulesEngineServlet</code> is a servelt used to plug vRuels4j into the
  * container as a standalone component. If vRules is deployed to Web Container
@@ -84,6 +86,7 @@ public class VRules4jServlet implements Servlet {
 
         try {
             URLConfiguration.initClasspathURLs();
+            ConfigurationProxy.getModifiedTimeTable().clear();
         } catch (Exception e) {
 
             e.printStackTrace();

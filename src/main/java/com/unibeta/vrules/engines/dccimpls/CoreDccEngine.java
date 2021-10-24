@@ -109,21 +109,27 @@ public class CoreDccEngine {
 			}
 		} catch (ClassNotFoundException e) {
 			ConfigurationProxy.getModifiedTimeTable().remove(ConfigurationProxy.buildKeyValue(fileName, decisionClass));
-			log.error(ClassNotFoundException.class.getCanonicalName()+ ":'" + e.getMessage() + "' occurred in rule file [" + fileName+"]");
-			
-//			log.info("begin re-try interprete and invoke " + fileName + " ...");
-//
-//			try {
-//				Thread.sleep(1000 * 3);
-//				CommonSyntaxs.setRuleFileModifiedBeatsCheckInterval(0L);
-//				errors = validate(object, fileName, entityId, decisionObject, vrulesMode);
-//				CommonSyntaxs.setRuleFileModifiedBeatsCheckInterval(maxInterval);
-//			} catch (ClassNotFoundException e1) {
-//				ConfigurationProxy.getModifiedTimeTable().remove(ConfigurationProxy.buildKeyValue(fileName, decisionClass));
-//				throw e;
-//			}
-//
-//			log.info(fileName + " is interpreted and invoked successfully in second time.");
+			log.error(ClassNotFoundException.class.getCanonicalName() + ":'" + e.getMessage()
+					+ "' occurred in rule file [" + fileName + "]");
+
+			// log.info("begin re-try interprete and invoke " + fileName + " ...");
+			//
+			// try {
+			// Thread.sleep(1000 * 3);
+			// CommonSyntaxs.setRuleFileModifiedBeatsCheckInterval(0L);
+			// errors = validate(object, fileName, entityId, decisionObject, vrulesMode);
+			// CommonSyntaxs.setRuleFileModifiedBeatsCheckInterval(maxInterval);
+			// } catch (ClassNotFoundException e1) {
+			// ConfigurationProxy.getModifiedTimeTable().remove(ConfigurationProxy.buildKeyValue(fileName,
+			// decisionClass));
+			// throw e;
+			// }
+			//
+			// log.info(fileName + " is interpreted and invoked successfully in second
+			// time.");
+		} catch (ClassCastException e) {
+			interprete(fileName, vrulesMode, decisionClass);
+			errors = invokeValidate(object, fileName, entityId, true, decisionClass);
 		}
 
 		if (errors != null && errors.length > 0) {
@@ -269,8 +275,8 @@ public class CoreDccEngine {
 		} else {
 			validator = validationClassLoader.newValidationInstance();
 		}
-		
-		if(validator == null) {
+
+		if (validator == null) {
 			validator = validationClassLoader.newValidationInstance();
 		}
 
