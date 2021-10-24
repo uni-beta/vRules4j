@@ -60,10 +60,12 @@ import com.unibeta.vrules.utils.CommonUtils;
  * @version 1.0.2@2020-04-06 11:06<br>
  *          1. Added **Validation variables to improve performance.<br>
  *          2. Fixed bugs if root ==null
+* @version 1.0.3@2021-10-25 02:48<br>
+ *          1. refined 'root' expression as configurable.<br>
  */
 public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 
-	private static final String CORE_ENGINE_VERSION = "1.0.0.b202004061148";
+	private static final String CORE_ENGINE_VERSION = "1.0.0.b202110260248";
 	private static final String CURRENT_RULE_ID_LIST = "$ruleIdList$";
 	// private static final String CURRENT_RULE_SET= "$ruleset$";
 	VRuleSuite ruleSuite = null;
@@ -282,7 +284,7 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 			for (int i = 0; i < fields.length && !CommonUtils.isNullOrEmpty(fields[i]); i++) {
 
 				String fName = fields[i];
-				codes.append(" " + fName + " = root.get(\"" + fName + "\");\n");
+				codes.append(" " + fName + " = "+THIS_ROOT+".get(\"" + fName + "\");\n");
 
 			}
 
@@ -291,7 +293,7 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 			for (int i = 0; i < fields.length && !CommonUtils.isNullOrEmpty(fields[i]); i++) {
 				String fName = fields[i];
 
-				codes.append("root.put(\"" + fName + "\"," + fName + ");\n");
+				codes.append(""+THIS_ROOT+".put(\"" + fName + "\"," + fName + ");\n");
 			}
 		}
 
@@ -631,7 +633,7 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 				String fName = fields[i].substring(0, 1).toUpperCase() + fields[i].substring(1);
 
 				if (null != getSetterMethod(clz, fName)) {
-					codes.append("root.set" + fName + "(" + fields[i] + ");\n");
+					codes.append(""+THIS_ROOT+".set" + fName + "(" + fields[i] + ");\n");
 				}
 			}
 		}
@@ -783,7 +785,7 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 							}
 						}
 						if (null != getSetterMethod(rootClassName, fieldName)) {
-							codes.append(" root.set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1)
+							codes.append(" "+THIS_ROOT+".set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1)
 									+ "(" + fieldName + ");\n");
 						}
 						codes.append("}\n");
@@ -856,7 +858,7 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 			}
 
 			if (getSetterMethod(rootClassName, fieldName) != null) {
-				codes.append(" root.set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1) + "("
+				codes.append(" "+THIS_ROOT+".set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1) + "("
 						+ fieldName + ");\n");
 			}
 
@@ -940,10 +942,10 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 		} // /////////end
 
 		if (getSetterMethod(rootClassName, fieldName) != null) {
-			codes.append(" root.set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1) + "("
+			codes.append(" "+THIS_ROOT+".set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1) + "("
 					+ fieldName + ");\n");
 		} else if (Map.class.isAssignableFrom(rootClassName)) {
-			codes.append("root.put(\"" + fieldName + "\"," + fieldName + ");\n");
+			codes.append(""+THIS_ROOT+".put(\"" + fieldName + "\"," + fieldName + ");\n");
 		}
 
 		codes.append("}\n");
@@ -978,10 +980,10 @@ public class DynamicValidationRulesInterpreter implements RulesInterpreter {
 		}
 
 		if (null != getSetterMethod(rootClassName, fieldName)) {
-			codes.append(" root.set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1) + "("
+			codes.append(" "+THIS_ROOT+".set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1) + "("
 					+ fieldName + ");\n");
 		} else if (Map.class.isAssignableFrom(rootClassName)) {
-			codes.append("root.put(\"" + fieldName + "\"," + fieldName + ");\n");
+			codes.append(""+THIS_ROOT+".put(\"" + fieldName + "\"," + fieldName + ");\n");
 		}
 
 		codes.append("}\n");
