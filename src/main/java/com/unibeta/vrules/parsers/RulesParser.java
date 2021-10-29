@@ -950,7 +950,7 @@ public class RulesParser {
 		}
 
 		String seqStr = ruleElement.getAttribute(SEQUENCE).trim();
-		long sequence = Long.valueOf(null == seqStr || "".equals(seqStr) ? 0 : Long.valueOf(seqStr)).longValue();
+		double sequence = Double.valueOf(null == seqStr || "".equals(seqStr) ? 0 : Double.valueOf(seqStr)).longValue();
 
 		String brakpointStr = ruleElement.getAttribute(BRAKPOINT).toUpperCase().trim();
 		String dependsStr = ruleElement.getAttribute(DEPENDS).trim();

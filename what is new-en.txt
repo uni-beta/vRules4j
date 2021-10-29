@@ -1,4 +1,11 @@
-﻿[2020-11-06]
+﻿[2020-10-29]
+1. Refined dynamic classloader issue for springboot.
+2. Enhanced full class name for compiled rules to avoid the issue of duplicated xml file name. FullClassNameMode is enabled by default.
+   Using 'com.unibeta.vrules.tools.CommonSyntaxs.setEnableFullClassNameMode(boolean)' to enable or disable FullClassName mode.
+3. Enhanced rule sequence support double data type.
+4. Released V3.4.1.
+
+[2020-11-06]
 1. Added '-DvRules4j.springboot' to support springboot startup in runtime, for example: -DvRules4j.springboot=D:\springboot-app-0.0.1-SNAPSHOT.jar
 2. Added '-DvRules4j.enableprint=false' arg in JVM to disable 'println()' and 'print()' functions' standard output.
 3. Added '-DvRules4j.ruleFileModifiedBeatsCheckInterval=60' arg in JVM to specify rule rile modified beats checking interval, time unit is seconds.

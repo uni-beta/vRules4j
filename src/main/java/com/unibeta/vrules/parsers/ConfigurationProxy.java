@@ -61,7 +61,7 @@ public class ConfigurationProxy {
 			.synchronizedMap(new Hashtable<String, GlobalConfig>());
 	private static Map<String, Map<String, List<String>>> rulesetMap = Collections
 			.synchronizedMap(new Hashtable<String, Map<String, List<String>>>());
-	private static boolean enableFullClassNameMode = false;
+	private static boolean enableFullClassNameMode = true;
 
 	public static boolean isEnableFullClassNameMode() {
 		return enableFullClassNameMode;

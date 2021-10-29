@@ -2,6 +2,7 @@ package com.unibeta.vrules.tools;
 
 import java.util.regex.Pattern;
 
+import com.unibeta.vrules.parsers.ConfigurationProxy;
 import com.unibeta.vrules.parsers.ObjectSerializer;
 import com.unibeta.vrules.utils.CommonUtils;
 
@@ -605,6 +606,14 @@ public class CommonSyntaxs {
 		Integer length = Integer.valueOf(regex);
 
 		return value.length() >= length;
+	}
+	
+	public static boolean isEnableFullClassNameMode() {
+		return ConfigurationProxy.isEnableFullClassNameMode();
+	}
+
+	public static void setEnableFullClassNameMode(boolean enableFullClassNameMode) {
+		ConfigurationProxy.setEnableFullClassNameMode(enableFullClassNameMode);
 	}
 
 }

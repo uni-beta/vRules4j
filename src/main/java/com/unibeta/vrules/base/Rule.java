@@ -46,7 +46,7 @@ public class Rule implements Comparable<Rule> {
     private String errorMessage;
     private Object errorObject;
     private String name;
-    private long sequence = 0;
+    private double sequence = 0;
     private boolean breakpoint = false;
     private String depends;
     private Binding binding;
@@ -244,35 +244,23 @@ public class Rule implements Comparable<Rule> {
         this.errorObject = errorObject;
     }
 
-    public long getSequence() {
+    public Double getSequence() {
 
         return sequence;
     }
 
-    public void setSequence(long sequence) {
+    public void setSequence(double sequence) {
 
         this.sequence = sequence;
     }
 
     public int compareTo(Rule o) {
 
-        int result = 0;
-
         if (null == o) {
-            result = 1;
+            return 1;
         }
 
-        if (null == this) {
-            result = -1;
-        }
-
-        if (this.getSequence() > o.getSequence()) {
-            result = 1;
-        } else {
-            result = -1;
-        }
-
-        return result;
+        return new Double(this.getSequence()).compareTo(Double.valueOf(o.getSequence()));
     }
 
     public boolean isBreakpoint() {

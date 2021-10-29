@@ -671,7 +671,7 @@ public class Java2vRules {
         Map<String, Integer> ruleIdCountMap = new HashMap<String, Integer>();
 
         if (fds != null & fds.length > 0) {
-            int sequenceIndex = 1;
+            double sequenceIndex = 1;
             for (int i = 0; i < fds.length; i++) {
                 Method method = fds[i];
 
@@ -711,7 +711,7 @@ public class Java2vRules {
                         .append(ruleId).append("\" ");
 
                 buildRulesAttributes(str, sequenceIndex, rule, xmlName);
-                sequenceIndex = (int) rule.getSequence() + 1;
+                sequenceIndex =  rule.getSequence() + 1;
 
                 str.append(getIntention(2))
                         .append(" ifTrue=\"\" ifFalse=\"\" ");
@@ -945,7 +945,7 @@ public class Java2vRules {
 
     }
 
-    private static void buildRulesAttributes(StringBuffer str, int i,
+    private static void buildRulesAttributes(StringBuffer str, double i,
             Rule rule, String xmlName) {
 
         str.append(getIntention(1))
